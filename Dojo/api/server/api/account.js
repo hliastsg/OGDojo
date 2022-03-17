@@ -116,16 +116,34 @@ router.get('/logout', auth, (req,res) => {
 router.post('/edit', auth, async(req,res) => {
 
   try {
-    const user = await Account.findOne({ $or: [ {email: req.body.email} ] })
-    if (!user) return res
+    //Get updated user credentials from front
+    const {name, surname, email, dob} = req.body;
+    //Search database by email for existing user
+    const user = await Account.findOne({ $or: [ {email: req.headers.email} ] })
+
+    if (user.email === email) return res
       .status(404)
-      .send("User Not Found!");
-    else {
+      .send("Email already in use!");
+    else if (name === user.name || surname === user.surname|| email === user.email || dob === user.dob){
       return res
-      .json(user);
+      .status(409)
+      .send("Credentials are the same as before");
+    } else if (name === null|| surname === null || email === null || dob === null ) {
+      return res
+      .status(401)
+      .send("Credentials cannot be empty");
+    }else {
+      user.name = name;
+      user.surname = surname;
+      user.email = email;
+      user.dateofbirth = dob;
+      await user.save();
+      return res
+      .status(201)
+      .send(user);
     }
   }catch(e) {
-
+    return res.send(e);
   }
 
 });

@@ -39,6 +39,7 @@
 
 .config {
   background: linear-gradient(#ffffff, transparent 150%), #d8d8d8;
+  background-position: fixed;
   top: 37px;
   left: 140px;
   width: 100%;
@@ -51,6 +52,18 @@
   align-items: center;
   height: 95vh;
   padding: 200px;
+}
+
+#save_btn {
+  display: flex;
+  border: #918888e3;
+  background-color: #918888;
+  color: #ffffffe3;
+  margin: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 15px;
 }
 
 .config h1 {
@@ -76,21 +89,49 @@
   border: #918888e3 solid 1px;
   width: 90%;
   padding: 15px;
-  margin: 10px;
   font-size: 15px;
   background-color: transparent;
   color: #918888e3;
+  margin: 10px;
+}
+
+.config-form label {
+  position: relative;
+  float: left;
 }
 
 .config-form  ::placeholder {
   font-family: Helvetica;
-  color: #918888e3;
+  color: #91888886;
 }
 
 .config-form label {
   font-family: Helvetica;
   color: #918888e3;
   font-weight: lighter;
+}
+/* .config-form i {
+  position: absolute;
+  color: rgb(226, 100, 100);
+  right: 60px;
+  top: 40px;
+} */
+.config-form.error {
+  border-color: rgb(226, 100, 100);
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  background-color: transparent;
+  color: #918888e3;
+  display: block;
+}
+
+.config small {
+  position: relative;
+  font-family: Helvetica;
+  color: #918888e3;
+  font-weight: lighter;
+  margin-bottom: 5px;
 }
 
 @media screen and (max-width: 850px) {
