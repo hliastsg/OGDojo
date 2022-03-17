@@ -36,7 +36,7 @@ const App = () => {
             <Route path="/login" element={< Login nav={navLink} />} />
             <Route path="/401" element={<NotAuth />} />
             <Route path="/dashboard" element={<Auth><Dashboard/></Auth>} />
-            <Route path="/account" element={<Auth><Account/></Auth>} />
+            <Route path="/account" element={<Auth><Account nav={navLink}/></Auth>} />
             <Route path="/account/usr-config" element={<Auth><AccConfig/></Auth>}/>
           </Routes>
         </Router>

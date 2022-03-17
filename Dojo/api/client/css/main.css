@@ -98,6 +98,7 @@ a {
   }
 }
 .activenav {
+  transition: transform 0.5s ease-in;
   transform: translateX(0%);
 }
 
@@ -208,7 +209,6 @@ form pre, p, h2 {
   font-family: Helvetica;
   color: rgba(255, 255, 255, 0.85);
   font-weight: lighter;
-  letter-spacing: 2px;
   text-align: center;
   margin-top: 10px;
   margin-bottom: 10px;

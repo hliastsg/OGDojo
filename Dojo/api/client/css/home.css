@@ -29,12 +29,12 @@
   border-right: 1px solid  #918888e3 ;
 }
 
-.menu-acc {
+.menu-icon {
   display: flex;
+  flex-direction: row;
   font-family: Helvetica;
   color: #918888e3;
   font-weight: lighter;
-  letter-spacing: 1px;
 }
 
 .config {
@@ -50,7 +50,7 @@
   flex-direction: column;
   align-items: center;
   height: 95vh;
-  margin: 20px;
+  padding: 200px;
 }
 
 .config h1 {
@@ -62,14 +62,14 @@
 }
 
 .config p {
+  font-size: larger;
   font-family: Helvetica;
   color: #918888e3;
-  font-weight: lighter;
 }
 .config-form {
   display: flex;
   flex-direction: column;
-  
+  padding: 10px;
 }
 
 .config-form input {
@@ -91,4 +91,30 @@
   font-family: Helvetica;
   color: #918888e3;
   font-weight: lighter;
+}
+
+@media screen and (max-width: 850px) {
+  /* .menubar  {
+    right: 10px
+  } */
+  body {
+    overflow-x: hidden;
+  }
+  .menubar {
+    transform: translateX(-75%);
+    transition: transform 0.5s ease-in;
+  }
+  .menu-icon h4{
+    visibility: hidden;
+  }
+  .menu-icon li {
+    display: flex;
+    position: fixed;
+    left: 254px;
+  }
+  
+  .config {
+    left: 60px;
+    padding: 50px;
+  }
 }

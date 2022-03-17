@@ -1,17 +1,19 @@
 import React from 'react';
 import { Link ,Navigate} from 'react-router-dom';
 
-const Account = () => {
+const Account = ({nav}) => {
 
   return (
     <div>
-      <nav className="menubar">
+      <nav className="menubar">  
+      <ul className='menu-icon'>
       <Link to="/account/usr-config">
-        <li className="menu-acc">
+        <li className="menu-icon">
         <i className="fas fa-user-cog"></i>
-        <h4>Account</h4>
+        <h4>&nbsp;Account</h4>
         </li>
-        </Link>
+      </Link>
+      </ul>
      </nav>
     </div>
   )
