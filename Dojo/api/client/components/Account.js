@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link ,Navigate} from 'react-router-dom';
 
-const Account = ({nav}) => {
+const Account = () => {
 
   return (
     <div>
