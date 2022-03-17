@@ -1,0 +1,265 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.welcome {
+  font-family: Helvetica;
+  background: linear-gradient(#9e9898, transparent 150%), #505050
+  url("https://data.whicdn.com/images/346877180/original.gif") center no-repeat fixed;
+  min-height: 100%;
+  min-width: 100%;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+button, link {
+  cursor: pointer;
+}
+
+::placeholder {
+  color:rgba(255, 255, 255, 0.85);
+}
+
+a {
+  text-decoration: none;
+}
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  min-height: 8vh;
+  position: fixed;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 5px;
+  z-index: 999;
+}
+
+.navlinks {
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  width: 50%;
+  font-size: 22px;
+}
+
+.logo {
+  display: flex;
+  color:#ffffffd5;
+  font-size: 32px;
+}
+
+.logo h4 {
+  margin-left: 7px;
+  letter-spacing: 1px;
+  font-weight: lighter;
+}
+
+.link {
+  letter-spacing: 2px;
+  font-weight: lighter;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+
+
+.link li:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.bar-toggle {
+  cursor: pointer;
+  color: white;
+  display: none;
+}
+
+@media screen and (max-width: 850px) {
+  body {
+    overflow-x: hidden;
+  }
+  .bar-toggle {
+    display: block;
+  }
+  .navlinks {
+    position: absolute;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+    align-items: center;
+    width: 100%;
+    top: 8vh;
+    background-color: rgb(82, 81, 81);
+    transform: translateX(100%);
+    transition: transform 0.5s ease-in;
+    z-index: 10;
+  }
+}
+.activenav {
+  transform: translateX(0%);
+}
+
+.active_ {
+  transform: translateX(200%);
+  transition: transform 0.5s ease-in;
+}
+
+.active__ {
+  z-index: -1;
+}
+
+.showcase {
+  display: flex;
+  width: 800px;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 800px;
+}
+
+.showcase h1{
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 68px;
+  font-weight: normal;
+  letter-spacing: 3px;
+  margin: 10px;
+}
+
+.showcase h2{
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: lighter;
+  letter-spacing: 2px;
+  text-align: center;
+  margin: 20px;
+}
+
+.signup_btn {
+  border: white solid 1px;
+  background-color: transparent;
+  color: white; 
+  padding: 10px 50px;
+  margin: 5px;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.login_btn {
+  border: white solid 1px;
+  background-color: white;
+  color: rgb(82, 81, 81);
+  padding: 10px 50px;
+  margin: 0 10px;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+
+.back_btn {
+  border: white solid 1px;
+  background-color: transparent;
+  color: white; 
+  padding: 10px 50px;
+  margin: 5px;
+}
+
+.forms {
+  position: relative;
+  top: 50px;
+  height: 95vh;
+  display: flex;
+  max-width: 800px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+
+}
+
+.form_control {
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.form_control input {
+  border: rgba(255, 255, 255, 0.85) solid 1px;
+  width: 90%;
+  padding: 15px;
+  margin: 0;
+  font-size: 15px;
+  background-color: transparent;
+  color: white;
+}
+
+form pre, p, h2 {
+  font-family: Helvetica;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: lighter;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#rgstr {
+  margin-bottom: 45px;
+}
+
+.login {
+  color:rgb(226, 100, 100);
+}
+
+.form_control i {
+  color: rgb(226, 100, 100);
+  position: absolute;
+  top: 18px;
+  right: 10px;
+}
+
+.form_control small {
+  position: absolute;
+  font-family: Helvetica;
+  color: rgba(255, 255, 255, 1);
+  font-weight: lighter;
+}
+
+.form_control.error {
+  border-color: rgb(226, 100, 100);
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  background-color: transparent;
+  color: white;
+  display: block;
+}
+
+.submit_login {
+
+  border: white solid 1px;
+  background-color: white;
+  color: rgb(82, 81, 81);
+  padding: 10px 50px;
+  margin: 0 10px;
+}
+
+.active{
+  visibility: hidden;
+}
+
+#input-submit {
+  cursor: pointer;
+}
