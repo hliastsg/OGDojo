@@ -1,18 +1,18 @@
 import axios from 'axios';
 import React from 'react';
 import Account from './Account';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-
+import { getUser } from '../store/actions/getUserAction';
 
 const AccConfig = () => {
 
-  //Get user credentials from redux getUser reducer
+  const dispatch = useDispatch();
   const user = {
-    email : useSelector(state => state.auth.user),
-    name : useSelector(state => state.getUser.name),
-    surname : useSelector(state => state.getUser.surname),
-    dob : useSelector(state => state.getUser.dob)
+    email: localStorage.getItem("email"),
+    name: localStorage.getItem("name"),
+    surname: localStorage.getItem("surname"),
+    dob: localStorage.getItem("dob")
   }
   //Initialise state when the user changes his credentials
   const [updateValues,setUpdateValues] = useState(user);
@@ -20,6 +20,7 @@ const AccConfig = () => {
   const [errors, setErrors] = useState({});
   //Did user submit the form?
   const [isSubmit, setIsSubmit] = useState(false);
+  const [result, setResult] = useState("");
 
   const validate = (values) => {
     const error = {};
@@ -38,18 +39,6 @@ const AccConfig = () => {
     }
     if (!values.dob) {
       error.dob = "Date of Birth is required!";
-    }
-    if (values.name === user.name){
-      error.name = "First Name is the same as before!"
-    }
-    if (values.surname === user.surname){
-      error.surname = "Last Name is the same as before!"
-    }
-    if (values.email === user.email){
-      error.email = "Email is the same as before!"
-    }
-    if (values.dob === user.dob){
-      error.dob = "Date of birth is the same as before!"
     } else if (!regexDate.test(values.dob)) {
       error.dob = "Date format should be like this: YYYY-MM-DD"
     }
@@ -75,10 +64,20 @@ const AccConfig = () => {
           'email': user.email}
         })
       .then((response) => {
-        console.log(response.data);
+        localStorage.setItem("name", response.data.name);
+        localStorage.setItem("surname", response.data.surname);
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("dob", response.data.dateofbirth.toString().split('T')[0]);
+        dispatch(getUser());
+        const { name, value } = response.data;
+        setUpdateValues({ ...updateValues, [name]: value });
+        setResult("Credentials updated succesfully!");
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err);
+        if (err.response.status === 409) {
+          setResult("Email already in use!");
+        }
       });
     }
   }, [errors]);
@@ -133,6 +132,7 @@ const AccConfig = () => {
           {/* <i className={errors.dob ? "fas fa-exclamation-circle" : ""}></i> */}
           <small>{errors.dob}</small>
           <input id="save_btn" type="submit" value="SAVE"/>
+          <small id={result === "Credentials updated succesfully!" ? "update-result" : "update-result.error"}>{result}</small>
         </form>
       </div>
     </div>

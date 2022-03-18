@@ -1,6 +1,7 @@
 const initState = {
   name: null,
   surname: null,
+  email: null,
   dob: null
 };
 
@@ -11,6 +12,7 @@ const getUserReducer = (state = initState, action) => {
         ...state,
         name: action.name,
         surname: action.surname,
+        email: action.email,
         dob: action.dob
       }
     case 'CLEAR_USER':
@@ -18,6 +20,7 @@ const getUserReducer = (state = initState, action) => {
         ...state,
         name: null,
         surname: null,
+        email: null,
         dob: null
       }
     default: return state;

@@ -120,15 +120,15 @@ router.post('/edit', auth, async(req,res) => {
     const {name, surname, email, dob} = req.body;
     //Search database by email for existing user
     const user = await Account.findOne({ $or: [ {email: req.headers.email} ] })
-
-    if (user.email === email) return res
-      .status(404)
-      .send("Email already in use!");
-    else if (name === user.name || surname === user.surname|| email === user.email || dob === user.dob){
-      return res
-      .status(409)
-      .send("Credentials are the same as before");
-    } else if (name === null|| surname === null || email === null || dob === null ) {
+    if (user.email !== email){
+      const emailExists = await Account.findOne({ $or: [ {email: email} ] })
+      if (emailExists) {
+        return res
+        .status(409)
+        .json("Email already in use!");
+      }
+    };
+    if (name === null|| surname === null || email === null || dob === null ) {
       return res
       .status(401)
       .send("Credentials cannot be empty");
@@ -142,8 +142,8 @@ router.post('/edit', auth, async(req,res) => {
       .status(201)
       .send(user);
     }
-  }catch(e) {
-    return res.send(e);
+  }catch(err) {
+    return res.json(err);
   }
 
 });

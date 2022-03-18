@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import Dashboard from './Dashboard';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginSuccess, LoginError } from '../store/actions/authAction';
 import { getUser } from '../store/actions/getUserAction';

@@ -133,6 +133,18 @@
   font-weight: lighter;
   margin-bottom: 5px;
 }
+#update-result {
+  display: flex;
+  position: relative;
+  align-self: center;
+  color:#74b958;
+}
+#update-result.error {
+  display: flex;
+  position: relative;
+  align-self: center;
+  color:rgb(226, 100, 100);
+}
 
 @media screen and (max-width: 850px) {
   /* .menubar  {
