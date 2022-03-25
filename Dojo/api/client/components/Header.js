@@ -1,11 +1,14 @@
 import React from "react";
 import { Link, Navigate} from 'react-router-dom';
 import { useSelector } from "react-redux";
+import Cookies from "universal-cookie";
 
 const Header = () => {
 
   const isAuth = useSelector(state => state.auth.isAuthenticated);
-
+  const cookie = new Cookies();
+  const isLogged = cookie.get("access_token");
+  
   return !isAuth ? (
     <div className="showcase welcome">
       <nav className="header">

@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import { LoginSuccess, LoginError } from '../store/actions/authAction';
-import { getUser } from '../store/actions/getUserAction';
 
 const Register = ({ nav }) => {
 
@@ -34,7 +33,6 @@ const Register = ({ nav }) => {
           localStorage.setItem("dob", response.data.dateofbirth.toString().split('T')[0]);
           console.log(localStorage.getItem("dob"));
           dispatch(LoginSuccess());
-          dispatch(getUser());
           navigate("/dashboard");
         })
         .catch((err) => {

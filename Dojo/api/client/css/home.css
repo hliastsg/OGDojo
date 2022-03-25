@@ -13,6 +13,8 @@
 .home {
   font-family: Helvetica;
   background: linear-gradient(#9e9898, transparent 150%), #505050;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition: all 1s;
 }
 
 .menubar {
@@ -26,7 +28,7 @@
   width: 300px;
   align-items: center;
   z-index: 99;
-  border-right: 1px solid  #918888e3 ;
+  border-right: 2px solid  #91888879 ;
 }
 
 .menu-icon {

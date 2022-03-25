@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginSuccess, LoginError } from '../store/actions/authAction';
-import { getUser } from '../store/actions/getUserAction';
 
 const Login = ({ nav }) => {
 
@@ -47,7 +46,6 @@ const Login = ({ nav }) => {
           console.log(response.data);
           if (response.status === 200) {
             dispatch(LoginSuccess());
-            dispatch(getUser());
             navigate("/dashboard");
           }
         })

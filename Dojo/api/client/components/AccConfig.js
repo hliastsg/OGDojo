@@ -1,19 +1,20 @@
 import axios from 'axios';
 import React from 'react';
 import Account from './Account';
-import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getUser } from '../store/actions/getUserAction';
+import { growl } from '@crystallize/react-growl';
 
 const AccConfig = () => {
 
-  const dispatch = useDispatch();
+
   const user = {
     email: localStorage.getItem("email"),
     name: localStorage.getItem("name"),
     surname: localStorage.getItem("surname"),
     dob: localStorage.getItem("dob")
   }
+
+  
   //Initialise state when the user changes his credentials
   const [updateValues,setUpdateValues] = useState(user);
   //Initialise errors for form validation
@@ -68,9 +69,13 @@ const AccConfig = () => {
         localStorage.setItem("surname", response.data.surname);
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("dob", response.data.dateofbirth.toString().split('T')[0]);
-        dispatch(getUser());
         const { name, value } = response.data;
         setUpdateValues({ ...updateValues, [name]: value });
+        growl({
+          title: 'Dojo',
+          message: 'Update sauccess'
+      });
+    
         setResult("Credentials updated succesfully!");
       })
       .catch((err) => {

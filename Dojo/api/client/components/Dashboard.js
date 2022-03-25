@@ -3,7 +3,6 @@ import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { Logout } from '../store/actions/authAction';
 import { useSelector,useDispatch } from 'react-redux';
-import { clearUser } from '../store/actions/getUserAction';
 
 const Dashboard = () => {
 
@@ -18,11 +17,10 @@ const Dashboard = () => {
       console.log(response.data);
     })
     .catch((e) => {
-      console.log(response.err);
+      console.log(e.response.data);
     })
     navigate("/");
     dispatch(Logout());
-    dispatch(clearUser());
     localStorage.clear();
   }
 

@@ -16,18 +16,16 @@ import Auth from './Auth';
 import AccConfig from './AccConfig';
 import store, {Persistor} from '../store/store';
 import { PersistGate } from 'redux-persist/integration/react';
-//import Growl from 'react-growl';
+import { GrowlScene } from '@crystallize/react-growl';
 
 const App = () => {
   // State gets updated on change of input
   const [navLink, setNavLink] = useState(false);
 
-  // Growl.setPosition("tr");
-  // Growl.setMaxToShow(1);
-
   return (
     <Provider store = {store}> 
       <PersistGate loading = {null} persistor = {Persistor}>
+      <GrowlScene />
         <Router>
           <title>Dojo</title>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
