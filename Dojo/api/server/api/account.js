@@ -15,7 +15,6 @@ router.post('/register', async(req,res) => {
   try {
     // Get user input
     const { name, surname, email, password, dateofbirth } = req.body;
-    console.log(name, surname, email, password, dateofbirth);
     // check if user already exist
     // Validate if user exist in our database
     const exists = await Account.findOne({ email });

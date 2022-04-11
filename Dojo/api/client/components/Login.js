@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginSuccess, LoginError } from '../store/actions/authAction';
+import { growl } from '@crystallize/react-growl';
 
 const Login = ({ nav }) => {
 
@@ -47,6 +48,11 @@ const Login = ({ nav }) => {
           if (response.status === 200) {
             dispatch(LoginSuccess());
             navigate("/dashboard");
+            growl({
+              title: 'Dojo',
+              message: 'Signed in as ' + localStorage.getItem("name"),
+              type: 'info'
+          });
           }
         })
         .catch((err) => {

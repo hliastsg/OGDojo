@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Logout } from '../store/actions/authAction';
 import { useSelector,useDispatch } from 'react-redux';
 
+
 const Dashboard = () => {
 
   const navigate = useNavigate();
@@ -25,8 +26,8 @@ const Dashboard = () => {
   }
 
   return (
-      <div className='dashboard'>
-      <h1>This is your dashboard!</h1>
+    <div className='d-header'> 
+     <h1>Explore Events</h1>
       <button className='login_btn' onClick={logoutHandler}>LOGOUT</button>
     </div>
   )

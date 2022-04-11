@@ -1,5 +1,6 @@
 .dashboard{
-  background: linear-gradient(#ffffff, transparent 150%), #d8d8d8;
+  /* background: linear-gradient(#ffffff, transparent 150%), #d8d8d8; */
+  font-weight: lighter;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
@@ -8,6 +9,18 @@
   width: 100%;
   position: absolute;
   top: 50px;
+}
+
+.d-header {
+  display: flex;
+  position: relative;
+  float: left;
+  top: 100px;
+  left: 40px;
+  font-family: 'SimSun';
+  color: #505050;
+  font-weight: lighter;
+  letter-spacing: 2px;
 }
 
 .home {
@@ -20,7 +33,7 @@
 .menubar {
   top: 37px;
   display: flex;
-  left: 0px;
+  left: 0;
   background: linear-gradient(#ffffff, transparent 150%), #d8d8d8;
   justify-content: space-around;
   height: 95vh;
@@ -40,20 +53,19 @@
 }
 
 .config {
-  background: linear-gradient(#ffffff, transparent 150%), #d8d8d8;
-  background-position: fixed;
-  top: 37px;
-  left: 140px;
-  width: 100%;
-  overflow: auto;
-  float: right;
+  /* background: linear-gradient(#ffffff, transparent 150%), #d8d8d8;
+  background-position: fixed; */
   display: flex;
-  position: fixed;
+  position: absolute;
+  top: 138px;
+  left: 400px;
+  right: 100px;
+  max-width: 800px;
+  overflow: 0;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  height: 95vh;
-  padding: 200px;
+  z-index: 0;
 }
 
 #save_btn {
@@ -169,7 +181,9 @@
   }
   
   .config {
+    top: 50px;
     left: 60px;
+    right: 0;
     padding: 50px;
   }
 }

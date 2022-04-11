@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import { LoginSuccess, LoginError } from '../store/actions/authAction';
+import { growl } from '@crystallize/react-growl';
 
 const Register = ({ nav }) => {
 
@@ -34,6 +35,10 @@ const Register = ({ nav }) => {
           console.log(localStorage.getItem("dob"));
           dispatch(LoginSuccess());
           navigate("/dashboard");
+          growl({
+            title: 'Dojo',
+            message: 'Signed up succesfully'
+        });
         })
         .catch((err) => {
           alert(err.response.data);

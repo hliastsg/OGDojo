@@ -21,7 +21,6 @@ const AccConfig = () => {
   const [errors, setErrors] = useState({});
   //Did user submit the form?
   const [isSubmit, setIsSubmit] = useState(false);
-  const [result, setResult] = useState("");
 
   const validate = (values) => {
     const error = {};
@@ -73,15 +72,17 @@ const AccConfig = () => {
         setUpdateValues({ ...updateValues, [name]: value });
         growl({
           title: 'Dojo',
-          message: 'Update sauccess'
+          message: 'Updated user details successfully'
       });
-    
-        setResult("Credentials updated succesfully!");
       })
       .catch((err) => {
         console.log(err);
         if (err.response.status === 409) {
-          setResult("Email already in use!");
+          growl({
+            title: 'Dojo',
+            message: 'Email already in use',
+            type: 'error'
+        });
         }
       });
     }
@@ -137,7 +138,6 @@ const AccConfig = () => {
           {/* <i className={errors.dob ? "fas fa-exclamation-circle" : ""}></i> */}
           <small>{errors.dob}</small>
           <input id="save_btn" type="submit" value="SAVE"/>
-          <small id={result === "Credentials updated succesfully!" ? "update-result" : "update-result.error"}>{result}</small>
         </form>
       </div>
     </div>
