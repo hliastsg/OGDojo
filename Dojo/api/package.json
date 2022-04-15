@@ -23,6 +23,7 @@
     "babel-preset-es2015": "^6.24.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
+    "bootstrap": "^5.1.3",
     "cookie-universal": "^2.1.5",
     "core-js-compat": "^3.4.7",
     "crypto-browserify": "^3.12.0",

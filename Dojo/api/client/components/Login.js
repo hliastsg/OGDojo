@@ -26,7 +26,6 @@ const Login = ({ nav }) => {
           localStorage.setItem("name", response.data.name);
           localStorage.setItem("surname", response.data.surname);
           localStorage.setItem("dob", response.data.dateofbirth.toString().split('T')[0]);
-          console.log(localStorage.getItem("dob"));
           setIsLogedIn(true);
         } else if (response.status === 202) {
           setResult("Incorect Password!");

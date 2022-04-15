@@ -100,6 +100,7 @@ router.get('/home', auth, (req,res) => {
 
 router.get('/logout', auth, (req,res) => {
   try{
+    console.log("hi");
     return res
     .clearCookie("access_token")
     .status(200)
@@ -107,7 +108,7 @@ router.get('/logout', auth, (req,res) => {
   }catch (e) {
     return res
     .status(404)
-    .json(err);
+    .json(e);
   }
   
 });
