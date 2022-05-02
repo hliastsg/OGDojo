@@ -20,6 +20,10 @@ button, link {
   cursor: pointer;
 }
 
+/* i:hover {
+  font-size: larger;
+  transition: 0.2s ease-in;
+} */
 ::placeholder {
   color:rgba(255, 255, 255, 0.85);
 }
@@ -44,12 +48,14 @@ a {
   justify-content: space-around;
   width: 50%;
   font-size: 22px;
+  
 }
 
 .logo {
   display: flex;
   color:#ffffffd5;
   font-size: 32px;
+  transition: 0.2s;
 }
 
 .logo h4 {
