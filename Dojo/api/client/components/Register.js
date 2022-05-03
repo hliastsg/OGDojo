@@ -159,10 +159,11 @@ const Register = ({ nav }) => {
       <div className="form_control">
         <input
           className={errors.dob ? "form_control error" : ""}
-          type="date"
+          type="text"
           name="dob"
           value={formValues.dob}
           placeholder="Date of Birth"
+          onFocus={(e) => e.target.type = "date"}
           onChange={handleOnChange}
         />
         <i className={errors.dob ? "fas fa-exclamation-circle" : ""}></i>
