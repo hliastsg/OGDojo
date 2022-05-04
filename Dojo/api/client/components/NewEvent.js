@@ -10,13 +10,30 @@ const NewEvent = () => {
     const { name, value } = e.target;
     setEventDetails({ ...eventDetails, [name]: value });
   }
+  const discardOnClick = (e) => {
+    setEventDetails(initialValues);
+  }
+
+  const createOnClick = () => {
+    if (eventDetails === initialValues) { 
+      axios.post('api/event/create-event', {
+        name: eventDetails.name, startDate: eventDetails.startDate, startTime: eventDetails.startTime,
+        description: eventDetails.description, location: eventDetails.location}) 
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        })
+    }
+  } 
 
   return (
     <div style={{ display: "inline-flex" }}>
       <div className="new-event-container">
         <h1>Create New Event</h1>
         <h3>Event Details</h3>
-        <form className="event-form">
+        <form id="event-form">
           <input 
             placeholder="Event Name" 
             type="text" 
@@ -103,6 +120,8 @@ const NewEvent = () => {
       <span>
         <i className="fas fa-calendar"/>
       </span>
+      <button className="create-btn" onClick={createOnClick}>create event</button>
+      <button className="create-btn discard" onClick={discardOnClick} >discard</button>
     </div>
   );
 };

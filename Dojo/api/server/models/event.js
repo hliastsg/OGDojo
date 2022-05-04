@@ -1,15 +1,18 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema
 
-//Create user schema
+//Create event schema
 const event = new Schema ({
   name: {
     type: String,
 
   },
-  date: {
+  startDate: {
     type: Date,
 
+  },
+  startTime: {
+    type: String
   },
   description: {
     type: String,
@@ -21,4 +24,4 @@ const event = new Schema ({
   },
 })
 
-module.exports = mongoose.model("account", account);
+module.exports = mongoose.model("event", event);
