@@ -38,6 +38,12 @@
   color: #91888886;
 }
 
+#event-form small {
+  font-family: Helvetica;
+  color: #918888e3;
+  font-weight: lighter;
+}
+
 .inline-date {
   display: inline-flex;
 }

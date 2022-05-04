@@ -28,7 +28,10 @@ app.use(express.json({ limit: '20mb' }));
 //         App Routes             //
 ////////////////////////////////////
 import account from './api/account.js';
+import event from './api/event';
+
 app.use('/api/account', account);
+app.use('/api/event', event);
 
 ////////////////////////////////////
 //        App React Template      //
