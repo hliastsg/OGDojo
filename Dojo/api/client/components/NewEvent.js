@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from 'axios';
 import { useState } from "react";
 import { growl } from '@crystallize/react-growl';
@@ -8,6 +8,7 @@ const NewEvent = () => {
   const initialValues = {name: "", startDate: "", startTime: "", description: "", location: ""};
   const [eventDetails, setEventDetails] = useState(initialValues); 
   const [errors, setErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -41,30 +42,66 @@ const NewEvent = () => {
   const createOnClick = (e) => {
     e.preventDefault();
     setErrors(validate(eventDetails));
-    
-
-    axios.post('api/event/create-event', {
-      name: eventDetails.name, startDate: eventDetails.startDate, startTime: eventDetails.startTime,
-      description: eventDetails.description, location: eventDetails.location}) 
-      .then((response) => {
-        console.log(response.data);
-        growl({
-          title: 'Dojo',
-          message: 'Event created succesfully! '
-      });
-      setEventDetails(initialValues);
-      })
-      .catch((error) => {
-        console.log(error.response.data); 
-        if (error.response.status === 409) {
-          growl({
-            title: 'Dojo',
-            message: error.response.data,
-            type: 'error'
-        });
-        }
-      })
+    setIsSubmit(true);
   } 
+
+  useEffect(() => {
+    if ( Object.keys(errors).length === 0 && isSubmit ) {
+      axios.post('api/event/create-event', {
+          name: eventDetails.name, startDate: eventDetails.startDate, startTime: eventDetails.startTime,
+          description: eventDetails.description, location: eventDetails.location}) 
+          .then((response) => {
+            console.log(response.data);
+            growl({
+              title: 'Dojo',
+              message: 'Event created succesfully! '
+          });
+          })
+          .catch((error) => {
+            console.log(error.response.data); 
+            if (error.response.status === 409) {
+              growl({
+                title: 'Dojo',
+                message: error.response.data,
+                type: 'error'
+            });
+            }
+          })
+    }
+    // if (Object.keys(errors).length != 0 ) {
+    //   if (errors.name) {
+    //     growl({
+    //       title: 'Dojo',
+    //       message: 'Event Name is required!',
+    //       type: 'warning' 
+    //   });
+    // } if (errors.startDate) {
+    //     growl({
+    //       title: 'Dojo',
+    //       message: 'Start Date is required!',
+    //       type: 'warning'
+    //   });
+    // } if (errors.startTime) {
+    //   growl({
+    //     title: 'Dojo',
+    //     message: 'Event Name is required!',
+    //     type: 'warning' 
+    // });
+    // } if (errors.description) {
+    //   growl({
+    //     title: 'Dojo',
+    //     message: 'Description is required!',
+    //     type: 'warning' 
+    // });
+    // } if (errors.location) {
+    //   growl({
+    //     title: 'Dojo',
+    //     message: 'Location is required!',
+    //     type: 'warning' 
+    //     });
+    //   }
+    // }
+  },[errors])
 
   return (
     <div style={{ display: "inline-flex" }}>
@@ -79,7 +116,6 @@ const NewEvent = () => {
             value={eventDetails.name}
             onChange={handleOnChange}
           />
-          <small>{errors.name}</small>
           <div className="inline-date">
             <input
               type="text"
@@ -89,7 +125,6 @@ const NewEvent = () => {
               placeholder="Start Date"
               onChange={handleOnChange}
             />
-            <small>{errors.startDate}</small>
             <input
               type="text"
               name="startTime"
@@ -98,7 +133,6 @@ const NewEvent = () => {
               placeholder="Start Time"
               onChange={handleOnChange}
             />
-            <small>{errors.startTime}</small>
           </div>
           <textarea
             style={{ height: "100px" }}
@@ -108,7 +142,6 @@ const NewEvent = () => {
             placeholder="Event Description"
             onChange={handleOnChange}
           />
-          <small>{errors.description}</small>
           <input 
           placeholder="Location" 
           type="text"
@@ -116,7 +149,6 @@ const NewEvent = () => {
           value={eventDetails.location}
           onChange={handleOnChange}
           />
-          <small>{errors.location}</small>
         </form>
       </div>
       <div className="side-container">
@@ -163,6 +195,13 @@ const NewEvent = () => {
       <span>
         <i className="fas fa-calendar"/>
       </span>
+      <ul className="event-form-errors">
+        <li>{errors.name}</li>
+        <li>{errors.startDate}</li>
+        <li>{errors.startTime}</li>
+        <li>{errors.description}</li>
+        <li>{errors.location}</li>
+      </ul>
       <button className="create-btn" onClick={createOnClick}>create event</button>
       <button className="create-btn discard" onClick={discardOnClick} >discard</button>
     </div>

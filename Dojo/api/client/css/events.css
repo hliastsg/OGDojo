@@ -38,11 +38,7 @@
   color: #91888886;
 }
 
-#event-form small {
-  font-family: Helvetica;
-  color: #918888e3;
-  font-weight: lighter;
-}
+
 
 .inline-date {
   display: inline-flex;
@@ -232,11 +228,31 @@
   right: 260px;
 }
 
+.event-form-errors {
+  display: flex;
+  position: absolute;
+  font-family: Helvetica;
+  color: #b33f3fe3;
+  font-weight: lighter;
+  list-style: none;
+  line-height: 2;
+  bottom:220px;
+  right: 660px;
+  left: 470px;
+  top: 370px;
+  min-width: 300px;
+  overflow: 0;
+  justify-content: center;
+  flex-direction: column;
+  padding: 30px;
+  margin: 10px;
+}
+
 @media screen and (max-width: 850px) {
   .overview {
-    top: 660px;
+    top: 800px;
     left: 25px;
-    height: 650px;
+    height: 600px;
   }
   .overview table {
     table-layout: fixed;
@@ -264,6 +280,10 @@
     right: 200px;
   }
 
+  .event-form-errors {
+    top: 700px;
+    left: 120px;
+  }
 
 
   

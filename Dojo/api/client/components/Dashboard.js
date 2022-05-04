@@ -1,13 +1,18 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 import { Logout } from "../store/actions/authAction";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import Cookies from "universal-cookie";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const events = 15;
+
+  const isAuth = useSelector(state => state.auth.isAuthenticated);
+  const cookie = new Cookies();
+  const isLogged = cookie.get("access_token");
 
   // const logoutHandler = (e) => {
   //   e.preventDefault();
@@ -28,7 +33,7 @@ const Dashboard = () => {
     navigate("/create-event");
   };
 
-  return (
+  return  (
     <div>
       <div className="d-header">
         <h1>{localStorage.getItem("name")}'s Events</h1>
@@ -54,6 +59,7 @@ const Dashboard = () => {
         </button>
       
     </div>
-  );
-};
+  )
+}
+
 export default Dashboard;
