@@ -1,9 +1,10 @@
 import express from 'express';
 import Event from '../models/event.js';
+import auth from '../middlewear/auth';
 
 var router = express.Router();
 
-router.post('/create-event', async (req,res) => {
+router.post('/create-event', auth, async(req,res) => {
   try{
 
     const {name, startDate, startTime, description, location} = req.body;
