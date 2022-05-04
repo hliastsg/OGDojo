@@ -13,9 +13,13 @@ const NewEvent = () => {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setEventDetails({ ...eventDetails, [name]: value });
+    setIsSubmit(false);
+    setErrors(validate(eventDetails));
   }
   const discardOnClick = (e) => {
     setEventDetails(initialValues);
+    setIsSubmit(false);
+    setErrors({});
   }
 
   const validate = (values) => {
@@ -67,40 +71,13 @@ const NewEvent = () => {
             });
             }
           })
+    } else  if (Object.keys(errors).length != 0 && isSubmit){
+      growl({
+        title: 'Dojo',
+        message: 'Complete all the fields to create an event ',
+        type: 'warning'
+    });
     }
-    // if (Object.keys(errors).length != 0 ) {
-    //   if (errors.name) {
-    //     growl({
-    //       title: 'Dojo',
-    //       message: 'Event Name is required!',
-    //       type: 'warning' 
-    //   });
-    // } if (errors.startDate) {
-    //     growl({
-    //       title: 'Dojo',
-    //       message: 'Start Date is required!',
-    //       type: 'warning'
-    //   });
-    // } if (errors.startTime) {
-    //   growl({
-    //     title: 'Dojo',
-    //     message: 'Event Name is required!',
-    //     type: 'warning' 
-    // });
-    // } if (errors.description) {
-    //   growl({
-    //     title: 'Dojo',
-    //     message: 'Description is required!',
-    //     type: 'warning' 
-    // });
-    // } if (errors.location) {
-    //   growl({
-    //     title: 'Dojo',
-    //     message: 'Location is required!',
-    //     type: 'warning' 
-    //     });
-    //   }
-    // }
   },[errors])
 
   return (
@@ -108,8 +85,9 @@ const NewEvent = () => {
       <div className="new-event-container">
         <h1>Create New Event</h1>
         <h3>Event Details</h3>
-        <form id="event-form">
+        <form className="event-form">
           <input 
+            className={errors.name && isSubmit ? "event-form error" : ""}
             placeholder="Event Name" 
             type="text" 
             name="name"
@@ -118,6 +96,7 @@ const NewEvent = () => {
           />
           <div className="inline-date">
             <input
+            className={errors.startDate && isSubmit ? "event-form error" : ""}
               type="text"
               name="startDate"
               value={eventDetails.startDate}
@@ -126,6 +105,7 @@ const NewEvent = () => {
               onChange={handleOnChange}
             />
             <input
+            className={errors.startTime && isSubmit ? "event-form error" : ""}
               type="text"
               name="startTime"
               value={eventDetails.startTime}
@@ -136,6 +116,7 @@ const NewEvent = () => {
           </div>
           <textarea
             style={{ height: "100px" }}
+            className={errors.description && isSubmit? "event-form error" : ""}
             type="text"
             name="description"
             value={eventDetails.description}
@@ -143,6 +124,7 @@ const NewEvent = () => {
             onChange={handleOnChange}
           />
           <input 
+          className={errors.location && isSubmit ? "event-form error" : ""}
           placeholder="Location" 
           type="text"
           name="location"
@@ -195,13 +177,6 @@ const NewEvent = () => {
       <span>
         <i className="fas fa-calendar"/>
       </span>
-      <ul className="event-form-errors">
-        <li>{errors.name}</li>
-        <li>{errors.startDate}</li>
-        <li>{errors.startTime}</li>
-        <li>{errors.description}</li>
-        <li>{errors.location}</li>
-      </ul>
       <button className="create-btn" onClick={createOnClick}>create event</button>
       <button className="create-btn discard" onClick={discardOnClick} >discard</button>
     </div>
