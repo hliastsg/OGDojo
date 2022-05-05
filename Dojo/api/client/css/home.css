@@ -26,12 +26,13 @@
 
 .home {
   font-family: Helvetica;
-  background: linear-gradient(#9e9898, transparent 150%), #505050;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background: linear-gradient(#da6b6b55, transparent 120%), #776161;
+  box-shadow: 0 4px 8px 0 rgba(132, 70, 70, 0.319), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transition: all 1s;
 }
 
 .menubar {
+  font-size: 20px;
   top: 37px;
   display: flex;
   flex-direction: column;
@@ -75,7 +76,7 @@
 #save_btn {
   display: flex;
   border: #918888e3;
-  background-color: #918888;
+  background: linear-gradient(#da6b6b55, transparent 120%), #776161;
   color: #ffffffe3;
   margin: 10px;
   max-height: 46px;
@@ -87,7 +88,7 @@
 }
 
 #save_btn:hover {
-  color: #505050;
+  color: #4b4b4b;
   font-size: 17px;
   transition: 0.2s ease-in;
 }
@@ -181,7 +182,7 @@
     overflow-x: hidden;
   }
   .menubar {
-    transform: translateX(-75%);
+    transform: translateX(-80%);
     transition: transform 0.5s ease-in;
   }
   .menubar span{
@@ -225,7 +226,7 @@
   text-align: center;
   border-radius: 20px;
   border-style: none;
-  background-color: #918888e3;
+  background: linear-gradient(#da6b6b55, transparent 120%), #776161;
   color: #ffffffe3;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s ease-out;

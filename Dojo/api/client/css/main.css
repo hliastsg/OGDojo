@@ -64,13 +64,26 @@ a {
   font-weight: lighter;
 }
 
+.logo i {
+  transition: 0.4s ease-in;
+}
+
+.logo i:hover {
+  transform: rotate(360deg);
+  transition: 0.4s ease-in;
+}
+
 .link {
   letter-spacing: 2px;
   font-weight: lighter;
   color: rgba(255, 255, 255, 0.85);
+  transition: all 0.5s;
 }
 
-
+.link:hover {
+  color: #000000;
+  transition: all 0.5s;
+}
 
 .link li:hover {
   color: rgba(255, 255, 255, 1);
@@ -143,6 +156,7 @@ a {
   font-weight: normal;
   letter-spacing: 3px;
   margin: 10px;
+  animation: fadeIn 1s;
 }
 
 .showcase h2{
@@ -162,6 +176,13 @@ a {
   align-items: center;
   flex-direction: row;
   justify-content: center;
+  transition: 0.5s;
+}
+
+.signup_btn:hover {
+  transition: 0.5s;
+  color: #000000;
+  border: black solid 1px;
 }
 
 .login_btn {
@@ -196,10 +217,20 @@ a {
 
 }
 
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
 .form_control {
   margin-bottom: 10px;
   padding-bottom: 20px;
   position: relative;
+  animation: fadeIn 0.7s;
+}
+
+.form_control i {
+  transition: 0.5s;
 }
 
 .form_control input {
@@ -210,9 +241,10 @@ a {
   font-size: 15px;
   background-color: transparent;
   color: white;
+  transition: 0.5s;
 }
 
-form pre, p, h2 {
+.form_control form pre, p, h2 {
   font-family: Helvetica;
   color: rgba(255, 255, 255, 0.85);
   font-weight: lighter;
@@ -223,6 +255,10 @@ form pre, p, h2 {
 
 #rgstr {
   margin-bottom: 45px;
+  font-family: Helvetica;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: lighter;
+  text-align: center;
 }
 
 .login {
@@ -234,6 +270,7 @@ form pre, p, h2 {
   position: absolute;
   top: 18px;
   right: 25px;
+  transition: 0.5s;
 }
 
 .form_control small {
@@ -241,6 +278,7 @@ form pre, p, h2 {
   font-family: Helvetica;
   color: rgba(255, 255, 255, 1);
   font-weight: lighter;
+  transition: 0.5s;
 }
 
 .form_control.error {
@@ -251,6 +289,7 @@ form pre, p, h2 {
   background-color: transparent;
   color: white;
   display: block;
+  transition: 0.5s;
 }
 
 .submit_login {

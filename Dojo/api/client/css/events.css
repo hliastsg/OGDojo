@@ -31,7 +31,10 @@
   background-color: transparent;
   color: #918888e3;
   margin: 10px;
+  transition: 0.5s;
 }
+
+
 
 .event-form ::placeholder {
   font-family: Helvetica;
@@ -47,6 +50,7 @@
   color: #918888e3;
   display: block;
   box-shadow: 0 4px 8px 0 rgba(255, 0, 0, 0.215);
+  transition: 0.5s;
 }
 
 .inline-date {
@@ -61,6 +65,7 @@
   font-weight: lighter;
   margin-left: 25px;
   margin-top: 40px;
+  text-align: start;
 }
 .card {
   /* Add shadows to create the "card" effect */
@@ -153,7 +158,6 @@
 
 .overview td {
   padding: 10px;
-  animation: 2s fadeIn;
   max-width: 500px;
 }
 @keyframes fadeIn {
