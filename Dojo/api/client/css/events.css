@@ -7,6 +7,7 @@
   justify-content: flex-start;
   align-items: center;
   align-self: center;
+  animation: fadeIn 1s;
 }
 
 .new-event-container h1 {
@@ -97,6 +98,7 @@
   justify-content: flex-start;
   flex-direction: column;
   z-index: 0;
+  animation: fadeIn 1s;
   
 }
 
@@ -139,6 +141,7 @@
   color: #918888e3;
   font-size: 15px;
   font-weight: lighter;
+  animation: fadeIn 1s;
 }
 
 .overview table {

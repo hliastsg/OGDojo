@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import FileBase64 from "react-file-base64";
 import { useState } from "react";
 import { growl } from "@crystallize/react-growl";
 
@@ -15,7 +14,8 @@ const NewEvent = () => {
   const [eventDetails, setEventDetails] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const [image, setImage] = useState({ image: '' });
+  const [image, setImage] = useState(null);
+  const formData = new FormData();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -30,6 +30,11 @@ const NewEvent = () => {
     setIsSubmit(false);
     setErrors({});
   };
+
+  const uploadImage = (e) => {
+    setImage(e.target.files[0]);
+    console.log(image);
+  }
 
   const validate = (values) => {
     const error = {};
@@ -67,7 +72,7 @@ const NewEvent = () => {
           startTime: eventDetails.startTime,
           description: eventDetails.description,
           location: eventDetails.location,
-          image: image
+          image: 
         })
         .then((response) => {
           console.log(response.data);
@@ -150,11 +155,10 @@ const NewEvent = () => {
       </div>
       <div className="side-container">
         <h3>Event Image</h3>
-        <FileBase64
-          type="file"
-          multiple={false}
-          onDone={({ base64 }) => setImage({ ...image, image: base64 })}
-        />
+        <input 
+          type="file" 
+          name="photo"
+          onChange={uploadImage}/> 
       </div>
       <div className="overview">
         <h1>Overview</h1>
