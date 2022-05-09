@@ -18,12 +18,12 @@ const isImage = (req, file, callback) => {
   }
 }
 
-const upload = multer({
+export const upload = multer({
   storage: multerConfig,
   fileFilter: isImage,
 });
 
-exports.uploadImage = upload.single('photo');
+export const uploadImage = upload.single('photo');
 
 exports.upload = (req, res) => {
   console.log(req.file);

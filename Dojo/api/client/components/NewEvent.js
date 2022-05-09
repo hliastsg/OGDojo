@@ -15,7 +15,7 @@ const NewEvent = () => {
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [image, setImage] = useState(null);
-  const formData = new FormData();
+
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +33,6 @@ const NewEvent = () => {
 
   const uploadImage = (e) => {
     setImage(e.target.files[0]);
-    console.log(image);
   }
 
   const validate = (values) => {
@@ -65,14 +64,22 @@ const NewEvent = () => {
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmit) {
+
+      const formData = new FormData();
+      formData.append('photo', image);
+      
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data; boundary: Content-Disposition: form-data; name="photo"', 
+        },
+      };
       axios
-        .post("api/event/create-event", {
+        .post("api/event/create-event", formData, {
           name: eventDetails.name,
           startDate: eventDetails.startDate,
           startTime: eventDetails.startTime,
           description: eventDetails.description,
           location: eventDetails.location,
-          image: 
         })
         .then((response) => {
           console.log(response.data);
@@ -157,6 +164,7 @@ const NewEvent = () => {
         <h3>Event Image</h3>
         <input 
           type="file" 
+          id="photo"
           name="photo"
           onChange={uploadImage}/> 
       </div>

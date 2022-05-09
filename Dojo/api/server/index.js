@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 require('dotenv').config();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use(express.static('dist'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: '20mb' }));
+//app.use(cors);
 
 
 

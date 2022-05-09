@@ -3,6 +3,7 @@ import Event from "../models/event.js";
 import auth from "../middlewear/auth";
 import {upload, uploadImage} from '../controllers/uploadController'
 import fs from 'fs';
+import path from 'path';
 
 var router = express.Router();
 
@@ -10,10 +11,10 @@ var router = express.Router();
 router.post("/create-event",uploadImage, auth, async (req, res) => {
   try {
     const { name, startDate, startTime, description, location } = req.body;
-    
+
     const img = { 
-      data: fs.readFileSync(path.join(__dirname + '/public/' + req.file)), 
-      contentType: 'photo'
+      data: fs.readFileSync(path.join(__dirname + '/public/' + req.file.filename)), 
+      contentType: 'image/jpeg'
   } 
 
     const exists = await Event.findOne({ name });
