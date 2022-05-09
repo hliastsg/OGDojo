@@ -10,36 +10,43 @@ var router = express.Router();
 //Controllers-Endpoints
 router.post("/create-event",uploadImage, auth, async (req, res) => {
   try {
-    const { name, startDate, startTime, description, location } = req.body;
+    //const { name, startDate, startTime, description, location } = req.body;
 
-    const img = { 
-      data: fs.readFileSync(path.join(__dirname + '/public/' + req.file.filename)), 
-      contentType: 'image/jpeg'
-  } 
-
-    const exists = await Event.findOne({ name });
+    const event = {
+      name: req.body.name,
+      startDate: req.body.startDate,
+      startTime: req.body.startTime,
+      description: req.body.description,
+      location: req.body.location,
+      image: { 
+        data: fs.readFileSync(path.join('/Users/eliastsg/Desktop/thesis4/OGDojo/Dojo/api/public/' + req.file.filename)), 
+        contentType: 'image/jpeg'
+      } 
+    }
+    const exists = await Event.findOne({ name: { $eq: event.name }});
 
     if (exists) {
       return res.status(409).send("Event title already exists");
     }
-    const newEvent = await Event.create({
-      name,
-      startDate,
-      startDate,
-      startTime,
-      description,
-      location,
-      img
-    });
 
-    return res.json(newEvent).status(200);
+    Event.create(event, (err, item) => {
+      if (err) { 
+        console.log(err); 
+     } 
+      else { 
+        res
+        .send("Event created")
+      } 
+    })
+
+    return res.status(200);
   } catch (e) {
     console.log(e);
     return res.json(e);
   }
 });
 
-router.post("/upload", uploadImage, upload);
+
 
 router.get("/get-events", async (req, res) => {
   console.log("get events");

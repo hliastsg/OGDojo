@@ -22,7 +22,6 @@ const NewEvent = () => {
     setEventDetails({ ...eventDetails, [name]: value });
     setIsSubmit(false);
     setErrors(validate(eventDetails));
-    console.log(image);
   };
 
   const discardOnClick = (e) => {
@@ -65,22 +64,29 @@ const NewEvent = () => {
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmit) {
 
-      const formData = new FormData();
-      formData.append('photo', image);
-      
-      const config = {
-        headers: {
-          'content-type': 'multipart/form-data; boundary: Content-Disposition: form-data; name="photo"', 
-        },
-      };
+      const data = new FormData();
+      data.append('name', eventDetails.name);
+      data.append('startDate', eventDetails.startDate);
+      data.append('startTime', eventDetails.startTime);
+      data.append('description', eventDetails.description);
+      data.append('location', eventDetails.location);
+      data.append('photo', image);
+      // axios
+      //   .post("api/event/upload", formData)
+      //   .then((response) => {
+      //     console.log(response.data);
+      //   })
+      //     console.log(error.response.data);
+      //   })
+      // {
+      //   name: eventDetails.name,
+      //   startDate: eventDetails.startDate,
+      //   startTime: eventDetails.startTime,
+      //   description: eventDetails.description,
+      //   location: eventDetails.location,
+      // },
       axios
-        .post("api/event/create-event", formData, {
-          name: eventDetails.name,
-          startDate: eventDetails.startDate,
-          startTime: eventDetails.startTime,
-          description: eventDetails.description,
-          location: eventDetails.location,
-        })
+        .post("api/event/create-event", data)
         .then((response) => {
           console.log(response.data);
           growl({
