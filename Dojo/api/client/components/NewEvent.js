@@ -71,20 +71,7 @@ const NewEvent = () => {
       data.append('description', eventDetails.description);
       data.append('location', eventDetails.location);
       data.append('photo', image);
-      // axios
-      //   .post("api/event/upload", formData)
-      //   .then((response) => {
-      //     console.log(response.data);
-      //   })
-      //     console.log(error.response.data);
-      //   })
-      // {
-      //   name: eventDetails.name,
-      //   startDate: eventDetails.startDate,
-      //   startTime: eventDetails.startTime,
-      //   description: eventDetails.description,
-      //   location: eventDetails.location,
-      // },
+     
       axios
         .post("api/event/create-event", data)
         .then((response) => {

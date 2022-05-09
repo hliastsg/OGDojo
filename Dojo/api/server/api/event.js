@@ -19,7 +19,7 @@ router.post("/create-event",uploadImage, auth, async (req, res) => {
       description: req.body.description,
       location: req.body.location,
       image: { 
-        data: fs.readFileSync(path.join('/Users/eliastsg/Desktop/thesis4/OGDojo/Dojo/api/public/' + req.file.filename)), 
+        data: fs.readFileSync(path.join('/Users/eliastsg/Desktop/thesis4/OGDojo/Dojo/api/uploads/' + req.file.filename)), 
         contentType: 'image/jpeg'
       } 
     }
