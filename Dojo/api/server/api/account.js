@@ -98,19 +98,11 @@ router.get('/home', auth, (req,res) => {
   
 })
 
-router.get('/logout', auth, (req,res) => {
-  try{
-    console.log("hi");
-    return res
+router.post("/logout", auth, (req, res) => {
+  return res
     .clearCookie("access_token")
     .status(200)
-    .json("Successfully logged out 😏 🍀")
-  }catch (e) {
-    return res
-    .status(404)
-    .json(e);
-  }
-  
+    .json({ message: "Successfully logged out 😏 🍀" });
 });
 
 router.post('/edit', auth, async(req,res) => {

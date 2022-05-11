@@ -19,7 +19,7 @@ router.post("/create-event",uploadImage, auth, async (req, res) => {
       description: req.body.description,
       location: req.body.location,
       image: { 
-        data: fs.readFileSync(path.join('/Users/eliastsg/Desktop/thesis4/OGDojo/Dojo/api/uploads/' + req.file.filename)), 
+        data: fs.readFileSync(path.join('/Users/eliastsg/Desktop/thesis/OGDojo/Dojo/api/uploads/' + req.file.filename)), 
         contentType: 'image/jpeg'
       } 
     }
@@ -50,16 +50,29 @@ router.post("/create-event",uploadImage, auth, async (req, res) => {
 
 router.get("/get-events", async (req, res) => {
   console.log("get events");
-  try {
-    const event = await Event.find();
-    res
-    .status(200)
-    .json(event);
-  } catch (error) {
-    res
-    .status(404)
-    .json({ message: error.message });
-  }
+    // Event.find({}, (err, items) => {
+    //   if (err) {
+    //     console.log(err);
+    //     res
+    //     .status(500)
+    //     .send(err)
+    //   }
+    //   else {
+    //     res
+    //     .send({items: items})
+    //   }
+    // });
+    try {
+      const events = await Event.find()
+      return res
+      .status(200)
+      .json(events)
+    }catch(err) {
+      return res
+      .status(500)
+      .send(err)
+    }
+    
 });
 
 export default router;

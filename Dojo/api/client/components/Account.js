@@ -12,7 +12,7 @@ const Account = () => {
   const logoutHandler = (e) => {
     e.preventDefault();
     axios
-    .get('api/account/logout')
+    .post('/api/account/logout')
     .then((response) => {
       console.log(response.data);
     })
