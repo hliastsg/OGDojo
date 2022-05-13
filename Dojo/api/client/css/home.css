@@ -11,17 +11,7 @@
   top: 50px;
 }
 
-.d-header {
-  position: relative;
-  float: left;
-  left: 40px;
-  top: 100px;
-  font-family: 'SimSun';
-  color: #505050;
-  font-weight: lighter;
-  letter-spacing: 2px;
-  animation: fadeIn 1s;
-}
+
 /* Add some padding inside the card container */
 
 

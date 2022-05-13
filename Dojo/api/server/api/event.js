@@ -49,7 +49,6 @@ router.post("/create-event",uploadImage, auth, async (req, res) => {
 
 
 router.get("/get-events", async (req, res) => {
-  console.log("get events");
     // Event.find({}, (err, items) => {
     //   if (err) {
     //     console.log(err);
