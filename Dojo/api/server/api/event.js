@@ -51,7 +51,6 @@ router.post("/create-event",uploadImage, auth, async (req, res) => {
 
 router.get("/get-events", async (req, res) => {
     const author = req.query.author;
-    console.log(author);
     try {
       const events = await Event.find({ author })
       return res

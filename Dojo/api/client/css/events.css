@@ -122,7 +122,12 @@
   max-height: 100%;
 }
 
-.card h2,p {
+.card h2 {
+  word-wrap: break-word;
+  color: #505050;
+}
+
+.card p {
   word-wrap: break-word;
   color: #505050;
 }
