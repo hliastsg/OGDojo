@@ -13,6 +13,7 @@ router.post("/create-event",uploadImage, auth, async (req, res) => {
     //const { name, startDate, startTime, description, location } = req.body;
 
     const event = {
+      author: req.body.author,
       name: req.body.name,
       startDate: req.body.startDate,
       startTime: req.body.startTime,
@@ -49,20 +50,10 @@ router.post("/create-event",uploadImage, auth, async (req, res) => {
 
 
 router.get("/get-events", async (req, res) => {
-    // Event.find({}, (err, items) => {
-    //   if (err) {
-    //     console.log(err);
-    //     res
-    //     .status(500)
-    //     .send(err)
-    //   }
-    //   else {
-    //     res
-    //     .send({items: items})
-    //   }
-    // });
+    const author = req.query.author;
+    console.log(author);
     try {
-      const events = await Event.find()
+      const events = await Event.find({ author })
       return res
       .status(200)
       .json(events)

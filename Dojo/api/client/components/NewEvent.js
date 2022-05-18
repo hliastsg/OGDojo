@@ -16,7 +16,6 @@ const NewEvent = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [image, setImage] = useState(null);
 
-
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setEventDetails({ ...eventDetails, [name]: value });
@@ -65,6 +64,7 @@ const NewEvent = () => {
     if (Object.keys(errors).length === 0 && isSubmit) {
 
       const data = new FormData();
+      data.append('author', localStorage.getItem("email"));
       data.append('name', eventDetails.name);
       data.append('startDate', eventDetails.startDate);
       data.append('startTime', eventDetails.startTime);
@@ -159,7 +159,8 @@ const NewEvent = () => {
           type="file" 
           id="photo"
           name="photo"
-          onChange={uploadImage}/> 
+          onChange={uploadImage}
+          required/> 
       </div>
       <div className="overview">
         <h1>Overview</h1>

@@ -3,6 +3,9 @@ const Schema = mongoose.Schema
 
 //Create event schema
 const event = new Schema ({
+  author: {
+    type: String
+  },
   name: {
     type: String,
 

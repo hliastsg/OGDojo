@@ -3,32 +3,43 @@ import { Link, useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Cookies from "universal-cookie";
+import arrayBufferToBase64 from 'base64-arraybuffer';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const itemList = {};
+  const author = localStorage.getItem("email");
   const [userEvents,setUserEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const arrayBufferToBase64 = (buffer) => {
+    let binaryStr = '';
+    const byteArray = new Uint8Array(buffer);
+    for (let i = 0; i < byteArray.byteLength; i++) {
+      binaryStr += String.fromCharCode(byteArray[i]);
+    }
+    return btoa(binaryStr);
+  };
+
   useEffect(() => {
+    console.log(author);
     fetchUserEvents();
+   
   }, [])
 
   const fetchUserEvents = () => {
-    axios.get("api/event/get-events")
+    axios.get("api/event/get-events", {
+      params: { author }})
     .then((response) => {
       setUserEvents(response.data);
       setIsLoading(false);
     })
       .catch((error) => {
         console.log(error);
-    });
+    }); 
   }
 
-  console.log(userEvents);
-  Object.values(userEvents).map(event => {
-    console.log(event._id);
-  })
+  // console.log(userEvents);
+ 
   const createOnClick = (e) => {
     navigate("/create-event");
   };
@@ -45,7 +56,7 @@ const Dashboard = () => {
     {
       Object.values(userEvents).map(event => (
       <div className="card">
-        <img src={event.image} style={{ width: "100%" }} />
+        <img src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(event.image.data.data)}`} style={{ width: "100%" }} />
         <div className="container">
           <h2 key={event._id}>{event.name} </h2>
           <p key={event._id + 1}>{event.startDate.toString().split('T')[0]} </p>
@@ -64,5 +75,5 @@ const Dashboard = () => {
   </div>
   );
 }
-
+//.toString().split('T')[0]
 export default Dashboard;
