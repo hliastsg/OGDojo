@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "../css/main.css";
 import "../css/home.css";
 import "../css/events.css";
+import "../css/details.css";
 import Header from './Header';
 import Navbar from './Navbar';
 import About from './About';

@@ -1,105 +1,77 @@
 import React, { useEffect } from "react";
+import { useParams, useLocation} from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { growl } from "@crystallize/react-growl";
+import arrayBufferToBase64 from "base64-arraybuffer";
 
-const NewEvent = () => {
-  const initialValues = {
-    name: "",
-    startDate: "",
-    startTime: "",
-    description: "",
-    location: "",
-  };
-  const [eventDetails, setEventDetails] = useState(initialValues);
-  const [errors, setErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [image, setImage] = useState(null);
+const EventDetails = () => {
 
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setEventDetails({ ...eventDetails, [name]: value });
-    setIsSubmit(false);
-    setErrors(validate(eventDetails));
-  };
+  const {id} = useParams();
+  const [event, setEvent] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-  const discardOnClick = (e) => {
-    setEventDetails(initialValues);
-    setIsSubmit(false);
-    setErrors({});
-  };
-
-
-
-
-
-  useEffect(() => {
-    if (Object.keys(errors).length === 0 && isSubmit) {
-
-      const data = new FormData();
-      data.append('author', localStorage.getItem("email"));
-      data.append('name', eventDetails.name);
-      data.append('startDate', eventDetails.startDate);
-      data.append('startTime', eventDetails.startTime);
-      data.append('description', eventDetails.description);
-      data.append('location', eventDetails.location);
-      data.append('photo', image);
-     
-      axios
-        .post("api/event/create-event", data)
-        .then((response) => {
-          console.log(response.data);
-          growl({
-            title: "Dojo",
-            message: "Event created succesfully! ",
-          });
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-          if (error.response.status === 409) {
-            growl({
-              title: "Dojo",
-              message: error.response.data,
-              type: "error",
-            });
-          }
-        });
-    } else if (Object.keys(errors).length != 0 && isSubmit) {
-      growl({
-        title: "Dojo",
-        message: "Complete all the fields to create an event ",
-        type: "warning",
-      });
+  const arrayBufferToBase64 = (buffer) => {
+    let binaryStr = "";
+    const byteArray = new Uint8Array(buffer);
+    for (let i = 0; i < byteArray.byteLength; i++) {
+      binaryStr += String.fromCharCode(byteArray[i]);
     }
-  }, [errors]);
+    return btoa(binaryStr);
+  };
+  
+  useEffect(() => {
+    fetchEventDetails();
+  },[])
 
-  return (
-    <div style={{ display: "inline-flex" }}>
-      <div className="overview" style={{top:"30px"}}>
-        <h1>Overview</h1>
+  const fetchEventDetails = () => {
+    axios
+    .get("http://localhost:3006/api/event/get-event-details", {
+      params: { id },
+    })
+    .then((response) => {
+      setEvent(response.data);
+      setIsLoading(false);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
+  
+  return isLoading ? (
+    <div className="loader"></div>
+  ) : (
+    <div>
+      <img
+        className="details-image"
+        src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(event.image.data.data)}`}
+      />
+      <div className="event-overview">
+        <h1>Event Details</h1>
         <table>
           <tbody>
             <tr>
               <td>Event Name:</td>
-              <td>{eventDetails.name}</td>
+              <td>{event.name}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
               <td>Start Date:</td>
-              <td>{eventDetails.startDate}</td>
+              <td>{new Date(event.startDate).toDateString()}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
               <td>Start Time:</td>
-              <td>{eventDetails.startTime}</td>
+              <td>{event.startTime}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
               <td>Location:</td>
-              <td>{eventDetails.location}</td>
+              <td>{event.location}</td>
             </tr>
           </tbody>
         </table>
@@ -107,16 +79,13 @@ const NewEvent = () => {
           <tbody id="description">
             <tr>
               <td>Description:</td>
-              <td>{eventDetails.description}</td>
+              <td>{event.description}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <span>
-        <i className="fas fa-calendar" />
-      </span>
     </div>
   );
 };
 
-export default NewEvent;
+export default EventDetails;

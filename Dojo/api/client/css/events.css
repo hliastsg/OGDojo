@@ -4,7 +4,8 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   max-width: 1500px;
-  top: 100px;
+  top: 140px;
+  right: 90px;
   animation: fadeIn 1s;
   white-space:pre-wrap;
   box-sizing: border-box 900px;
@@ -16,8 +17,8 @@
   position: relative;
   margin-bottom: 50px;
   float: left;
-  left: 40px;
-  top: 100px;
+  left: 140px;
+  top: 140px;
   font-family: 'SimSun';
   color: #505050;
   font-weight: lighter;
@@ -27,15 +28,70 @@
 
 .expl-header {
   position: relative;
-  margin-top: 250px;
-  float: left;
-  left: 40px;
+  margin-top: 270px;
+  left: 140px;
   font-family: 'SimSun';
   color: #505050;
   font-weight: lighter;
   letter-spacing: 2px;
   animation: fadeIn 1s;
 }
+
+.no-events i {
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.no-events p {
+  font-family: 'Helvetica Neue';
+  font-size: 20px;
+  color:#505050;
+  margin-bottom: 30px;
+}
+
+.create-link {
+  position: relative;
+  bottom: 53px;
+  left: 685px;
+  border: white;
+  font-family: 'Helvetica';
+  font-size: 20px;
+  background-image: linear-gradient(
+    to right,
+    #3D0F52,
+    #3D0F52 50%,
+    #918888 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  transition: all 0.3s ease-in-out;;
+}
+
+.create-link:before {
+  content: '';
+  background: #3D0F52;
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.create-link:hover {
+  background-position: 0;
+}
+
+.create-link:hover::before {
+  width: 300%;
+}
+
 .new-event-container {
   display: inline-block;
   position: absolute;
@@ -317,10 +373,10 @@
 
 .loader {
   position: fixed;
-  top: 100px;
-  left: 100px;
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #918888; /* Blue */
+  top: 320px;
+  left: 640px;
+  border: 16px solid #e8dbeb;  /* Light grey */
+  border-top: 16px solid #3D0F52; /* Blue */
   border-radius: 50%;
   width: 120px;
   height: 120px;

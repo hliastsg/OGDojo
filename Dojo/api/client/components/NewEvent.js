@@ -10,6 +10,7 @@ const NewEvent = () => {
     startTime: "",
     description: "",
     location: "",
+    img: null,
   };
   const [eventDetails, setEventDetails] = useState(initialValues);
   const [errors, setErrors] = useState({});
@@ -25,6 +26,7 @@ const NewEvent = () => {
 
   const discardOnClick = (e) => {
     setEventDetails(initialValues);
+    setImage(null);
     setIsSubmit(false);
     setErrors({});
   };

@@ -64,4 +64,18 @@ router.get("/get-events", async (req, res) => {
     
 });
 
+router.get("/get-event-details", async (req, res) => {
+  const id = req.query.id;
+  try {
+    const eventDetails = await Event.findOne({ _id: { $eq: id }})
+    return res
+    .status(200)
+    .json(eventDetails);
+  } catch(err) {
+    return res
+    .status(500)
+    .send(err);
+  }
+});
+
 export default router;
