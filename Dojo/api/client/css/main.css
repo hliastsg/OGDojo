@@ -35,7 +35,7 @@ a {
 .navbar {
   display: flex;
   justify-content: space-around;
-  min-height: 8vh;
+  min-height: 7vh;
   position: fixed;
   width: 100%;
   align-items: center;

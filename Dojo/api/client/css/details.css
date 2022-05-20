@@ -6,8 +6,11 @@
   height:580px;
   object-fit:cover;
   object-position:50% 50%;
-  filter: blur(4px);
-  -webkit-filter: blur(4px);
+  /* filter: blur(4px);
+  -webkit-filter: blur(4px); */
+  box-shadow: 0 4px 8px 0 rgba(100, 74, 121, 0.319), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  animation: intro 0.7s ease-in;
+
 }
 
 .event-overview {
@@ -45,4 +48,9 @@
   padding-bottom: 90px;
   letter-spacing: 8px;
   word-wrap: break-word;
+}
+
+@keyframes intro {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, useLocation} from "react-router-dom";
+import { useParams, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { growl } from "@crystallize/react-growl";
@@ -10,6 +10,7 @@ const EventDetails = () => {
   const {id} = useParams();
   const [event, setEvent] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const arrayBufferToBase64 = (buffer) => {
     let binaryStr = "";
@@ -36,6 +37,28 @@ const EventDetails = () => {
     .catch((error) => {
       console.log(error);
     });
+  }
+
+  const deleteEventHandler = (e) => {
+    window.confirm('Are you sure you wish to delete this event?') ? deleteEvent() : ""
+  }
+
+  const deleteEvent = () => {
+    axios
+    .post("http://localhost:3006/api/event/delete-event", {
+      id: id
+    })
+    .then((response) => {
+      navigate("/dashboard")
+      growl({
+        title: 'Dojo',
+        message: 'Event deleted successfully',
+        type: 'success'
+    });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   
@@ -83,6 +106,15 @@ const EventDetails = () => {
             </tr>
           </tbody>
         </table>
+        <div style={{margin: "30px"}}>
+          <button 
+            className="create-btn" >edit event details</button>
+          <button 
+            style= {{right: "330px"}} 
+            className="create-btn discard"
+            onClick={deleteEventHandler}>delete event</button>
+        </div>
+       
       </div>
     </div>
   );

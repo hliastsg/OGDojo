@@ -47,7 +47,6 @@ const Dashboard = () => {
   };
 
   const handlerProceed = (id) => {
-    console.log(id);
     navigate(`/event-details/${id}`, {state: {id}})
   }
  
@@ -58,7 +57,7 @@ const Dashboard = () => {
       <div className="d-header">
         {userEvents.length === 0 ? (
           <div className="no-events">
-            <i class="far fa-grimace"></i>
+            <i className="far fa-grimace"></i>
             <h1>You haven't created any events yet.</h1>
             <p>To create an event, click on the button at the bottom right corner, or </p>
             <a className="create-link" href="/create-event">here</a>

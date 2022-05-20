@@ -49,7 +49,7 @@ router.post("/create-event",uploadImage, auth, async (req, res) => {
 
 
 
-router.get("/get-events", async (req, res) => {
+router.get("/get-events", auth, async (req, res) => {
     const author = req.query.author;
     try {
       const events = await Event.find({ author })
@@ -64,7 +64,7 @@ router.get("/get-events", async (req, res) => {
     
 });
 
-router.get("/get-event-details", async (req, res) => {
+router.get("/get-event-details", auth, async (req, res) => {
   const id = req.query.id;
   try {
     const eventDetails = await Event.findOne({ _id: { $eq: id }})
@@ -77,5 +77,19 @@ router.get("/get-event-details", async (req, res) => {
     .send(err);
   }
 });
+
+router.post("/delete-event", auth, async (req,res) => {
+  const id = req.body.id;
+  try {
+    const event = await Event.deleteOne({ _id: { $eq: id }})
+    return res
+    .status(200)
+    .json({message: "Event deleted succersfully"})
+  } catch (err) {
+    return res
+    .status(500)
+    .json(err)
+  }
+})
 
 export default router;

@@ -19,7 +19,7 @@
   font-family: Helvetica;
   background: linear-gradient(#56335C, transparent 80%), #3D0F52;
   box-shadow: 0 4px 8px 0 rgba(132, 70, 70, 0.319), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  transition: all 1s;
+  transition: all 0.5s;
 }
 
 .menubar {
