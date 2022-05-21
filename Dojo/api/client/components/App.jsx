@@ -18,6 +18,7 @@ import Auth from './Auth';
 import AccConfig from './AccConfig';
 import NewEvent from './NewEvent'
 import EventDetails from './EventDetails.js';
+import EditEvent from './EditEvent.js';
 import store, {Persistor} from '../store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { GrowlScene } from '@crystallize/react-growl';
@@ -46,6 +47,8 @@ const App = () => {
             <Route path="/account/usr-config" element={<Auth><AccConfig/></Auth>}/>
             <Route path="/create-event" element={<Auth><NewEvent/></Auth>}/>
             <Route path="/event-details/:id" element={<Auth><EventDetails/></Auth>}/>
+            <Route path="/edit-event" element={<Auth><EditEvent/></Auth>}/>
+            
           </Routes>
         </Router>
       </PersistGate>

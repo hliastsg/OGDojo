@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { growl } from "@crystallize/react-growl";
 import arrayBufferToBase64 from "base64-arraybuffer";
+import EditEvent from "./EditEvent"
 
 const EventDetails = () => {
 
@@ -41,6 +42,11 @@ const EventDetails = () => {
 
   const deleteEventHandler = (e) => {
     window.confirm('Are you sure you wish to delete this event?') ? deleteEvent() : ""
+  }
+  const editEventHandler = (e) => {
+    console.log(id);
+    localStorage.setItem("id", id)
+    navigate("/edit-event", {state: {id: id}})
   }
 
   const deleteEvent = () => {
@@ -108,7 +114,8 @@ const EventDetails = () => {
         </table>
         <div style={{margin: "30px"}}>
           <button 
-            className="create-btn" >edit event details</button>
+            className="create-btn"
+            onClick={editEventHandler} >edit event details</button>
           <button 
             style= {{right: "330px"}} 
             className="create-btn discard"
