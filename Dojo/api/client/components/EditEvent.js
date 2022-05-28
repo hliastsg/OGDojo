@@ -6,8 +6,20 @@ import {useParams} from "react-router-dom";
 
 const EditEvent = () => {
   //const {id} = useParams();
-  const id = localStorage.getItem("id")
-  console.log(id);
+  const id = localStorage.getItem("id");
+  const initialValues = {
+    name: "",
+    startDate: "",
+    startTime: "",
+    location: "",
+    description: "",
+    image: ""
+  }
+  const [event, setEvent] = useState(initialValues);
+
+  useEffect(() => {
+    fetchEventDetails();
+  },[]);
 
   const fetchEventDetails = () => {
     axios
@@ -15,33 +27,38 @@ const EditEvent = () => {
       params: { id },
     })
     .then((response) => {
-      //setEvent(response.data);
+      setEvent(response.data);
       setIsLoading(false);
     })
     .catch((error) => {
       console.log(error);
     });
   }
+  
+  const [updatedValues, setUpdatedValues] = useState(event);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errors, setErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [image, setImage] = useState(null);
+
   useEffect(() => {
-    fetchEventDetails();
     if (Object.keys(errors).length === 0 && isSubmit) {
 
       const data = new FormData();
-      data.append('author', localStorage.getItem("email"));
-      data.append('name', eventDetails.name);
-      data.append('startDate', eventDetails.startDate);
-      data.append('startTime', eventDetails.startTime);
-      data.append('description', eventDetails.description);
-      data.append('location', eventDetails.location);
+      data.append('id', id);
+      data.append('name', event.name);
+      data.append('startDate', event.startDate);
+      data.append('startTime', event.startTime);
+      data.append('description', event.description);
+      data.append('location', event.location);
       data.append('photo', image);
-     
       axios
-        .post("api/event/create-event", data)
+        .post("api/event/edit-event", data)
         .then((response) => {
           console.log(response.data);
           growl({
             title: "Dojo",
-            message: "Event created succesfully! ",
+            message: "Event details updated succesfully! ",
           });
         })
         .catch((error) => {
@@ -57,35 +74,22 @@ const EditEvent = () => {
     } else if (Object.keys(errors).length != 0 && isSubmit) {
       growl({
         title: "Dojo",
-        message: "Complete all the fields to create an event ",
+        message: "Complete the fields to update your event's details ",
         type: "warning",
       });
     }
   }, [errors]);
-  const initialValues = {
-    name: "",
-    startDate: "",
-    startTime: "",
-    description: "",
-    location: "",
-    img: null,
-  };
-  const [eventDetails, setEventDetails] = useState(initialValues);
-  const [isLoading, setIsLoading] = useState(true);
-  const [errors, setErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [image, setImage] = useState(null);
 
   
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    setEventDetails({ ...eventDetails, [name]: value });
+    setEvent({ ...event, [name]: value });
     setIsSubmit(false);
-    setErrors(validate(eventDetails));
+    setErrors(validate(event));
   };
 
   const discardOnClick = (e) => {
-    setEventDetails(initialValues);
+    setEvent(initialValues);
     setImage(null);
     setIsSubmit(false);
     setErrors({});
@@ -118,7 +122,7 @@ const EditEvent = () => {
 
   const createOnClick = (e) => {
     e.preventDefault();
-    setErrors(validate(eventDetails));
+    setErrors(validate(event));
     setIsSubmit(true);
   };
 
@@ -127,7 +131,7 @@ const EditEvent = () => {
   return (
     <div style={{ display: "inline-flex" }}>
       <div className="new-event-container">
-        <h1>Create New Event</h1>
+        <h1>Update Event Details</h1>
         <h3>Event Details</h3>
         <form className="event-form">
           <input
@@ -135,7 +139,7 @@ const EditEvent = () => {
             placeholder="Event Name"
             type="text"
             name="name"
-            value={eventDetails.name}
+            value={event.name}
             onChange={handleOnChange}
           />
           <div className="inline-date">
@@ -143,7 +147,7 @@ const EditEvent = () => {
               className={errors.startDate && isSubmit ? "event-form error" : ""}
               type="text"
               name="startDate"
-              value={eventDetails.startDate}
+              value={new Date(event.startDate).toDateString()}
               onFocus={(e) => (e.target.type = "date")}
               placeholder="Start Date"
               onChange={handleOnChange}
@@ -152,7 +156,7 @@ const EditEvent = () => {
               className={errors.startTime && isSubmit ? "event-form error" : ""}
               type="text"
               name="startTime"
-              value={eventDetails.startTime}
+              value={event.startTime}
               onFocus={(e) => (e.target.type = "time")}
               placeholder="Start Time"
               onChange={handleOnChange}
@@ -163,7 +167,7 @@ const EditEvent = () => {
             className={errors.description && isSubmit ? "event-form error" : ""}
             type="text"
             name="description"
-            value={eventDetails.description}
+            value={event.description}
             placeholder="Event Description"
             onChange={handleOnChange}
           />
@@ -172,7 +176,7 @@ const EditEvent = () => {
             placeholder="Location"
             type="text"
             name="location"
-            value={eventDetails.location}
+            value={event.location}
             onChange={handleOnChange}
           />
         </form>
@@ -192,25 +196,25 @@ const EditEvent = () => {
           <tbody>
             <tr>
               <td>Event Name:</td>
-              <td>{eventDetails.name}</td>
+              <td>{event.name}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
               <td>Start Date:</td>
-              <td>{eventDetails.startDate}</td>
+              <td>{new Date(event.startDate).toDateString()}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
               <td>Start Time:</td>
-              <td>{eventDetails.startTime}</td>
+              <td>{event.startTime}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
               <td>Location:</td>
-              <td>{eventDetails.location}</td>
+              <td>{event.location}</td>
             </tr>
           </tbody>
         </table>
@@ -218,7 +222,7 @@ const EditEvent = () => {
           <tbody id="description">
             <tr>
               <td>Description:</td>
-              <td>{eventDetails.description}</td>
+              <td>{event.description}</td>
             </tr>
           </tbody>
         </table>
@@ -227,9 +231,9 @@ const EditEvent = () => {
         <i className="fas fa-calendar" />
       </span>
       <button className="create-btn" onClick={createOnClick}>
-        create event
+        update event details
       </button>
-      <button className="create-btn discard" onClick={discardOnClick}>
+      <button style= {{right: "390px"}} className="create-btn discard" onClick={discardOnClick}>
         discard
       </button>
     </div>

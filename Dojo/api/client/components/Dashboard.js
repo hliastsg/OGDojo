@@ -1,20 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, Navigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { LoginError } from "../store/actions/authAction";
 import Cookies from "universal-cookie";
 import arrayBufferToBase64 from "base64-arraybuffer";
-import EventDetails from "./EventDetails.js";
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const author = localStorage.getItem("email");
   const [userEvents, setUserEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const dispatch = useDispatch;
   const [id, setId] = useState();
+  const [requestFailed, setRequestFailed] = useState(false);
 
+  const isAuth = useSelector(state => state.auth.isAuthenticated);
+  
+  useEffect(() => {
+    if (!isAuth) {
+      dispatch(LoginError());
+      navigate("/401");
+    }
+  },[isAuth])
 
+  const AuthString = 'Bearer ' + 'OKMZG5JZFV2ZR7V4SY  '; 
+  let config = {
+    headers: {
+      'Access-Control-Allow-Origin': 'http://localhost:3006',
+      'Authorization': AuthString,
+    }
+  }
+//   axios
+//   .get("https://www.eventbriteapi.com/v3/users/me/?token=RKON5J4YRP3YX637WGCL/")
+//   .then((response) => {
+//     console.log(response.data);
+//   })
+//   .catch((error) => {
+//     console.log('error ' + error);
+//  });
   const arrayBufferToBase64 = (buffer) => {
     let binaryStr = "";
     const byteArray = new Uint8Array(buffer);
@@ -36,9 +61,10 @@ const Dashboard = () => {
       .then((response) => {
         setUserEvents(response.data);
         setIsLoading(false);
+        //window.location.href = "https://www.eventbrite.com/oauth/authorize?response_type=code&client_id=OKMZG5JZFV2ZR7V4SY&redirect_uri=http://localhost"
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error); 
       });
   };
 

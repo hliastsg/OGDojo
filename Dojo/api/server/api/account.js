@@ -91,7 +91,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/home', auth, (req,res) => {
   try {
-    res.status(200).send("Welcome cunt");
+    res.status(200).send("Welcome! Authentication succedeed");
   } catch(e) {
     return res.status(401);
   }
