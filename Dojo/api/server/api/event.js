@@ -29,6 +29,7 @@ router.post("/create-event", uploadImage, auth, async (req, res) => {
         ),
         contentType: "image/jpeg",
       },
+      attendees: 0
     };
     const exists = await Event.findOne({ name: { $eq: event.name } });
 
@@ -142,61 +143,7 @@ router.post("/edit-event", uploadImage, auth, async (req, res) => {
   }
 });
 
-// router.post("/edit-event",uploadImage, auth, async (req, res) => {
-//   try {
-//     //const { name, startDate, startTime, description, location } = req.body;
 
-//     const new_values = {
-//       id: req.body.id,
-//       name: req.body.name,
-//       startDate: req.body.startDate,
-//       startTime: req.body.startTime,
-//       description: req.body.description,
-//       location: req.body.location,
-//       image: {
-//         data: fs.readFileSync(path.join('/Users/eliastsg/Desktop/thesis/OGDojo/Dojo/api/uploads/' + req.file.filename)),
-//         contentType: 'image/jpeg'
-//       }
-//     }
-//     const event = await Event.findOne({ _id: { $eq: id }})
-//     if (user.email !== email){
-//       const emailExists = await Account.findOne({ $or: [ {email: email} ] })
-//       if (emailExists) {
-//         return res
-//         .status(409)
-//         .json("Email already in use!");
-//       }
-//     };
-//     if (name === null|| surname === null || email === null || dob === null ) {
-//       return res
-//       .status(401)
-//       .send("Credentials cannot be empty");
-//     }else {
-//       user.name = name;
-//       user.surname = surname;
-//       user.email = email;
-//       user.dateofbirth = dob;
-//       await user.save();
-//       return res
-//       .status(201)
-//       .send(user);
-
-//     Event.create(event, (err, item) => {
-//       if (err) {
-//         console.log(err);
-//      }
-//       else {
-//         res
-//         .send("Event created")
-//       }
-//     })
-
-//     return res.status(200);
-//   } catch (e) {
-//     console.log(e);
-//     return res.json(e);
-//   }
-// });
 router.post("/delete-event", auth, async (req, res) => {
   const id = req.body.id;
   try {
@@ -207,4 +154,26 @@ router.post("/delete-event", auth, async (req, res) => {
   }
 });
 
+router.post("/attend-event", auth, async (req,res) => {
+  const id = req.body.id;
+
+  try {
+    const event = await Event.findOne({ _id: { $eq: id } });
+    if (event) {
+      event.attendees = event.attendees + 1;
+      await event.save();
+      return res
+      .status(200)
+      .json("Attending Event")
+    } else {
+      return res
+      .status(404)
+      .json("Event not found!")
+    }
+  } catch (err) {
+    return res
+    .status(500)
+    .json(err);
+  }
+})
 export default router;

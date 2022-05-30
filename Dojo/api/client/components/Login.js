@@ -68,7 +68,7 @@ const Login = ({ nav }) => {
       onSubmit={loginHandler}
       className={nav ? " forms active__ welcome" : "forms welcome"}
     >
-      <h2>Enter your credentials to log in</h2>
+      <h2 id="login-header">Enter your credentials to log in</h2>
       <div className="form_control">
         <input
           className={result === "User Not Found!" || result === "Incorect Password!" ? "form_control error" : "form_control"}

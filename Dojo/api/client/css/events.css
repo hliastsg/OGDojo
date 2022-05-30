@@ -18,7 +18,7 @@
   margin-bottom: 50px;
   float: left;
   left: 140px;
-  top: 140px;
+  top: 120px;
   font-family: 'SimSun';
   color: #505050;
   font-weight: lighter;
@@ -164,10 +164,14 @@
 }
 .card {
   /* Add shadows to create the "card" effect */
+  font-family: 'Helvetica Neue';
+  font-weight: 300;
+  text-align: center;
   justify-content: center;
   align-items: center;
   position: relative;
   margin: 10px;
+  margin-bottom: 30px;
   width: 250px;
   min-height: 170px;
   top: 50px;
@@ -183,12 +187,15 @@
 }
 
 .card h2 {
+  font-weight: 400;
+  padding: 5px;
   word-wrap: break-word;
   color: #505050;
 }
 
 .card p {
   word-wrap: break-word;
+  padding: 10px;
   color: #505050;
 }
 
@@ -378,6 +385,7 @@
   position: fixed;
   top: 320px;
   left: 640px;
+  right: 1200px;
   border: 16px solid #e8dbeb;  /* Light grey */
   border-top: 16px solid #3D0F52; /* Blue */
   border-radius: 50%;
@@ -426,6 +434,11 @@
   .discard {
     right: 200px;
   }  
+
+  .loader {
+    top: 350px;
+    left:220px;
+  }
 }
 
 

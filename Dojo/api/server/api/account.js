@@ -139,5 +139,23 @@ router.post('/edit', auth, async(req,res) => {
   }
 
 });
+router.get("/search-friends", auth, async (req,res) => {
+  try {
+    const user = req.query.search;
+//$or: [ {name: user}, {surname: user}, {email: user} ]
+    const userFound = await Account.findOne( {$or: [ {name: user}, {surname: user}, {email: user} ]})
+    if (!userFound) {
+      return res
+      .status(404)
+      .json("No result")
+    } else {
+      return res
+      .status(200)
+      .json(userFound)
+    }
+  } catch (err) {
+    return res.json(err);
+  }
+})
 
 export default router;

@@ -8,13 +8,18 @@ import arrayBufferToBase64 from "base64-arraybuffer";
 
 
 const Dashboard = () => {
+
   const navigate = useNavigate();
   const author = localStorage.getItem("email");
   const [userEvents, setUserEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch;
   const [id, setId] = useState();
-  const [requestFailed, setRequestFailed] = useState(false);
+  const [friendId, setFriendId] = useState();
+  const [resultEmail, setResultEmail] = useState();
+  const [search, setSearch] = useState();
+  const [searchResult, setSearchResult] = useState();
+  const [noResult, setNoResult] = useState();
 
   const isAuth = useSelector(state => state.auth.isAuthenticated);
   
@@ -75,11 +80,45 @@ const Dashboard = () => {
   const handlerProceed = (id) => {
     navigate(`/event-details/${id}`, {state: {id}})
   }
- 
+
+  const searchFriendsHandler = (e) => {
+    setSearch(e.target.value);
+    axios
+    .get("/api/account/search-friends", {
+      params: { search }
+    })
+    .then((response) => {
+      setSearchResult(response.data);
+      setFriendId(response.data._id);
+      setResultEmail(response.data.email);
+    })
+    .catch((error) => {
+      setNoResult(error.response.data);
+    });
+  }
+  const searchFoundHandler = (e) => {
+    navigate(`/friends-events/${friendId}`, {state: {email: searchResult.email, name: searchResult.name} });
+  }
   return isLoading ? (
     <div className="loader"></div>
   ) : (
     <div>
+      <div className="search-friends">
+        <h1>Search for friends</h1>
+        <p>You can search and find other public events from friends</p>
+        <input 
+        type="text" 
+        placeholder="Search by name, last name or email." 
+        onChange={searchFriendsHandler}
+        />
+        <div>
+          { searchResult ? (
+            <a onClick={searchFoundHandler}>{searchResult.name + " " + searchResult.surname}</a>
+          ) : (
+            <p>{noResult}</p>
+          )}
+        </div>
+      </div>
       <div className="d-header">
         {userEvents.length === 0 ? (
           <div className="no-events">

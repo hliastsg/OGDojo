@@ -254,6 +254,7 @@
   display: inline-flex;
   justify-content: center;
   cursor: pointer;
+  margin: 10px;
 }
 
 .user-options i{
@@ -279,7 +280,7 @@
 
 .dropdown {
   display: none;
-  margin-top: 30px;
+  margin-top: 28px;
   position: absolute;
   background-color: #3D0F52;
   justify-content: center;
@@ -302,17 +303,13 @@
   background-color:#9575a3
 }
 
-
-
-.activedrop {
-  transition: transform 0.3s ease-in 0.3s;
-  transform: translateY(80%);
-  animation: fadeIn 0.5s;
-  visibility: visible;
-}
-
-.deactivate {
-  transition: transform 0.5s ease-in;
-  transform: translateY(-50%);
+@media screen and (max-width: 850px) {
+  body {
+    overflow-x: hidden;
+  }
+  .user-options {
+    position: relative;
+    left: 100px;
+  }
 }
 

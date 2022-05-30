@@ -54,3 +54,47 @@
   0% { transform: translateX(-100%); }
   100% { transform: translateX(0%); }
 }
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+.search-friends {
+  position: relative;
+  top: 100px;
+  left: 120px;
+  font-family: 'SimSun';
+  color: #505050;
+  margin: 20px;
+  animation: fadeIn 0.5s;
+}
+
+.search-friends input {
+  border: #918888e3 solid 1px;
+  min-width: 400px;
+  padding: 15px;
+  font-size: 17px;
+  background-color: transparent;
+  color: #918888e3;
+  margin: 10px;
+  transition: 0.5s;
+}
+
+::placeholder {
+  color:#918888e3;
+}
+
+.search-friends p {
+  font-family: 'Helvetica Neue';
+  font-size: 18px;
+  color:#505050;
+  margin-top: 10px;
+}
+
+.search-friends a {
+  font-family: 'Helvetica Neue';
+  font-size: 18px;
+  color:#505050;
+  margin-top: 10px;
+}

@@ -18,6 +18,7 @@ const EditEvent = () => {
   const [event, setEvent] = useState(initialValues);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchEventDetails();
   },[]);
 

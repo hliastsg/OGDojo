@@ -25,11 +25,13 @@ const event = new Schema ({
     type: String,
 
   },
-  image: 
-    { 
+  image: { 
         data: Buffer, 
         contentType: String 
-    } 
+  },
+  attendees: {
+    type: Number,
+  } 
 },{ timestamps: true })
 
 module.exports = mongoose.model("event", event);

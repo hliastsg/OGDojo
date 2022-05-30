@@ -87,7 +87,7 @@ const Navbar = ({nav, setNav}) => {
         <i className="fa fa-user-circle menu-icon"></i>
         <span>{localStorage.getItem("name")}</span>
         <div className="dropdown">
-          <Link to="/account/usr-config">
+          <Link to="/account/usr-config"> 
            <li className="drop-link">Settings</li>
           </Link>
         <li className="drop-link" onClick={LogoutHandler}>Log out</li>
