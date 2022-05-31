@@ -79,6 +79,9 @@ const Navbar = ({nav, setNav}) => {
          <Link to="/dashboard">
           <li onClick={linkOnClick} className="link">Home</li>
          </Link>
+         <Link to="/myevents">
+          <li onClick={linkOnClick} className="link">My Events</li>
+         </Link>
          <Link to="/account/usr-config">
           <li onClick={linkOnClick} className="link">Account</li>
          </Link>

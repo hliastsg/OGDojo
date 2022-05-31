@@ -32,9 +32,11 @@ app.use(express.json({ limit: '20mb' }));
 ////////////////////////////////////
 import account from './api/account.js';
 import event from './api/event';
+import user from './api/user';
 
 app.use('/api/account', account);
 app.use('/api/event', event);
+app.use('/api/user', user);
 
 ////////////////////////////////////
 //        App React Template      //

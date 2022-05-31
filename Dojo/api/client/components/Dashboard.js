@@ -16,7 +16,6 @@ const Dashboard = () => {
   const dispatch = useDispatch;
   const [id, setId] = useState();
   const [friendId, setFriendId] = useState();
-  const [resultEmail, setResultEmail] = useState();
   const [search, setSearch] = useState();
   const [searchResult, setSearchResult] = useState();
   const [noResult, setNoResult] = useState();
@@ -90,7 +89,6 @@ const Dashboard = () => {
     .then((response) => {
       setSearchResult(response.data);
       setFriendId(response.data._id);
-      setResultEmail(response.data.email);
     })
     .catch((error) => {
       setNoResult(error.response.data);

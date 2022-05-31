@@ -56,17 +56,6 @@ router.get("/get-events", auth, async (req, res) => {
   const author = req.query.author;
   try {
     const events = await Event.find({ author });
-    const AuthString = "Bearer " + "RKON5J4YRP3YX637WGCL  ";
-    let _headers = {  
-      headers: {
-        "Authorization": AuthString,
-        'Content-Type': 'application/json'
-      },
-    };
-    let config = {
-      headers: _headers,
-      json: true,
-    }
     return res.status(200).json(events);
   } catch (err) {
     return res.status(500).send(err);
@@ -154,26 +143,5 @@ router.post("/delete-event", auth, async (req, res) => {
   }
 });
 
-router.post("/attend-event", auth, async (req,res) => {
-  const id = req.body.id;
 
-  try {
-    const event = await Event.findOne({ _id: { $eq: id } });
-    if (event) {
-      event.attendees = event.attendees + 1;
-      await event.save();
-      return res
-      .status(200)
-      .json("Attending Event")
-    } else {
-      return res
-      .status(404)
-      .json("Event not found!")
-    }
-  } catch (err) {
-    return res
-    .status(500)
-    .json(err);
-  }
-})
 export default router;

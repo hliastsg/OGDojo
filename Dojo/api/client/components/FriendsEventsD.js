@@ -41,10 +41,13 @@ const FriendsEventDetails = () => {
   }
 
   const attendEventHandler = (e) => {
-    console.log(id);
+
     axios
-    .post("/api/event/attend-event", {
+    .post("/api/user/attend-event", {
       id: id,
+      name: localStorage.getItem("name"),
+      surname: localStorage.getItem("surname"),
+      email: localStorage.getItem("email")
     })
     .then((response) => {
       growl({
@@ -55,7 +58,14 @@ const FriendsEventDetails = () => {
 
     })
     .catch((err) => {
-      console.log(err.response.data);
+      if (err.response.status === 409) {
+        growl({
+          title: 'Dojo',
+          message: err.response.data,
+          type: 'warning'
+      });
+      }
+      
     });
   }
 
