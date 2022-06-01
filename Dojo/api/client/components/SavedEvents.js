@@ -1,6 +1,7 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 const SavedEvents = () => {
 
@@ -8,6 +9,8 @@ const SavedEvents = () => {
   const [eventIds, setEventIds] = useState([]);
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [id, setId] = useState();
+  const navigate = useNavigate();
 
   const arrayBufferToBase64 = (buffer) => {
     let binaryStr = "";
@@ -50,11 +53,15 @@ const SavedEvents = () => {
   useEffect(() => {
     const exec = async () => {
       const getEvents = await Promise.all(eventIds.map(event => {
-        fetchAttendingEvents(event.eventId);
+        fetchAttendingEvents(event.eventId)
       }))
     };
     exec();
   },[eventIds])
+
+  const handlerProceed = (id) => {
+    navigate(`/attending-event/${id}`, {state: {id: id}})
+  }
 
   return isLoading ? (
     <div className="loader"></div>
@@ -63,15 +70,15 @@ const SavedEvents = () => {
       <div className="d-header">
         <h1>Events that you are attending</h1>
       </div>
-      <div className="feed">
+      <div className="feed" style={{right: "300px"}}>
         {Object.values(events).map(function (event, i) {
           return (
             <div
               className="card"
               key={i}
               onClick={(e) => {
-                //  setId(event._id);
-                // handlerProceed(event._id);
+                setId(event._id);
+                handlerProceed(event._id);
               }}
             >
               <img

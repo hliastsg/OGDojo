@@ -89,6 +89,7 @@ const Register = ({ nav }) => {
   return !isAuth ? (
     <form onSubmit={registerUser}
       className={nav ? "forms active__ welcome" : "forms welcome"}
+      autoComplete="off"
     >
       {Object.keys(errors).length === 0 && isSubmit ? (<p id="rgstr">Signed up succesfully!</p>)
         : <pre id="rgstr">Complete the fields to register</pre>}
@@ -97,6 +98,7 @@ const Register = ({ nav }) => {
           className={errors.name ? "form_control error" : ""}
           type="text"
           name="name"
+          autoComplete="off"
           value={formValues.name}
           placeholder="First Name"
           onChange={handleOnChange}
@@ -110,6 +112,7 @@ const Register = ({ nav }) => {
           className={errors.surname ? "form_control error" : ""}
           type="text"
           name="surname"
+          autoComplete="off"
           value={formValues.surname}
           placeholder="Surname"
           onChange={handleOnChange}
@@ -123,6 +126,7 @@ const Register = ({ nav }) => {
           className={errors.email ? "form_control error" : ""}
           type="email"
           name="email"
+          autoComplete="off"
           value={formValues.email}
           placeholder="E-Mail"
           onChange={handleOnChange}
@@ -136,6 +140,7 @@ const Register = ({ nav }) => {
           className={errors.password ? "form_control error" : ""}
           type="password"
           name="password"
+          autoComplete="off"
           value={formValues.password}
           placeholder="Create Password"
           onChange={handleOnChange}
@@ -149,6 +154,7 @@ const Register = ({ nav }) => {
           className={errors.password ? "form_control error" : ""}
           type="password"
           value={matchPass}
+          autoComplete="off"
           placeholder="Confirm Password"
           onChange={(e) => setMatchPass(e.target.value)}
         />
@@ -161,6 +167,7 @@ const Register = ({ nav }) => {
           className={errors.dob ? "form_control error" : ""}
           type="text"
           name="dob"
+          autoComplete="off"
           value={formValues.dob}
           placeholder="Date of Birth"
           onFocus={(e) => e.target.type = "date"}

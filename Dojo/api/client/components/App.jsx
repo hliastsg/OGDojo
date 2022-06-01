@@ -22,6 +22,7 @@ import EditEvent from './EditEvent.js';
 import Friends from './Friends.js';
 import FriendsEventDetails from './FriendsEventsD.js';
 import SavedEvents from './SavedEvents.js';
+import Attending from './Attending.js';
 import store, {Persistor} from '../store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { GrowlScene } from '@crystallize/react-growl';
@@ -54,6 +55,7 @@ const App = () => {
             <Route path="/friends-events/:id" element={<Auth><Friends/></Auth>}/>
             <Route path="/friends-events-details/:id" element={<Auth><FriendsEventDetails/></Auth>}/>
             <Route path="/myevents" element={<Auth><SavedEvents/></Auth>}/>
+            <Route path="/attending-event/:id" element={<Auth><Attending/></Auth>}/>
           </Routes>
         </Router>
       </PersistGate>

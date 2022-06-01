@@ -15,31 +15,44 @@ router.post("/attend-event", auth, async (req,res) => {
       eventId: req.body.id,
       attending: true
     }
-    
     const event = await Event.findOne({ _id: { $eq: saveEvent.eventId } });
 
-    const attended = await savedEvent.findOne({userEmail: {$eq: saveEvent.userEmail}})
-    console.log(attended.eventId);
-    console.log(saveEvent.eventId);
-    if (attended.eventId != saveEvent.eventId) {
-      event.attendees = event.attendees + 1;
-      await event.save();
-
+    const attended = await savedEvent.find({userEmail: {$eq: saveEvent.userEmail}})
+    var exists = false;
+    if(attended) {
+      Object.values(attended).map(event => {
+        if (event.eventId === saveEvent.eventId) {
+          exists = true;
+       }
+      })
+      if (exists) {
+        return res
+        .status(409)
+        .json("You're already attending this event");
+      } else {
+          savedEvent.create(saveEvent, (err, item) => {
+          if (err) {
+            console.log(err);
+          }
+          });
+          event.attendees = event.attendees + 1;
+          await event.save();
+          return res
+          .status(200)
+          .json("Attending Event")
+      }
+    }
+    else {
       savedEvent.create(saveEvent, (err, item) => {
         if (err) {
           console.log(err);
         }
-      });
-
-      return res
-      .status(200)
-      .json("Attending Event")
-
-    } else {
-      return res
-      .status(409)
-      .json("You're already attending this event")
-
+        });
+        event.attendees = event.attendees + 1;
+        await event.save();
+        return res
+        .status(200)
+        .json("Attending Event")
     }
   } catch (err) {
     return res
@@ -51,7 +64,6 @@ router.post("/attend-event", auth, async (req,res) => {
 router.get("/get-attending-ids", auth, async (req,res) => {
   try {
     const email = req.query.userEmail;
-    console.log(email);
     const attending_events = await savedEvent.find({userEmail: {$eq: email}})
 
     if (attending_events) {
