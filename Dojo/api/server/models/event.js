@@ -29,6 +29,9 @@ const event = new Schema ({
         data: Buffer, 
         contentType: String 
   },
+  tags: {
+    type: Array,
+  },
   attendees: {
     type: Number,
   } 

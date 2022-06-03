@@ -1,0 +1,40 @@
+.tags-input-container{
+  border: #918888e3 solid 1px;
+  padding: .5em;
+  width: min(80vw, 400px);
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5em;
+}
+
+.tag-item{
+  background-color: rgb(218, 216, 216);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: .5em .75em;
+  border-radius: 20px;
+}
+.tag-item .close{
+  display: flex;
+  height: 18px;
+  width: 18px;
+  background-color: rgb(48, 48, 48);
+  color: #fff;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: .5em;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.tags-input{
+  flex-grow: 1;
+  padding: .5em 0;
+  border: none;
+  outline: none;
+}

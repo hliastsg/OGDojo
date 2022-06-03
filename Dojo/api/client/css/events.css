@@ -3,22 +3,20 @@
   position: relative;
   flex-wrap: wrap;
   justify-content: flex-start;
-  max-width: 1500px;
-  top: 140px;
-  right: 90px;
+  max-width: 1200px;
+  top: 50px;
+  left: 150px;
+  margin-bottom: 10px;
   animation: fadeIn 1s;
   white-space:pre-wrap;
-  box-sizing: border-box 900px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing:  border-box;
 }
 
 .d-header {
   position: relative;
   margin-bottom: 50px;
-  float: left;
   left: 140px;
   top: 120px;
+  max-width: 1200px;
   font-family: 'SimSun';
   color: #505050;
   font-weight: lighter;
@@ -405,7 +403,7 @@
 
 @media screen and (max-width: 850px) {
   .overview {
-    top: 660px;
+    top: 860px;
     left: 25px;
     height: 600px;
   }

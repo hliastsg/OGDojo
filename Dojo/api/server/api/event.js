@@ -29,8 +29,11 @@ router.post("/create-event", uploadImage, auth, async (req, res) => {
         ),
         contentType: "image/jpeg",
       },
+      tags: req.body.tags.split(','),
       attendees: 0
     };
+    //const tags = req.body.tags.split(',');
+
     const exists = await Event.findOne({ name: { $eq: event.name } });
 
     if (exists) {

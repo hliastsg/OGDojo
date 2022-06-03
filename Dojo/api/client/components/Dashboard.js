@@ -36,14 +36,6 @@ const Dashboard = () => {
       'Authorization': AuthString,
     }
   }
-//   axios
-//   .get("https://www.eventbriteapi.com/v3/users/me/?token=RKON5J4YRP3YX637WGCL/")
-//   .then((response) => {
-//     console.log(response.data);
-//   })
-//   .catch((error) => {
-//     console.log('error ' + error);
-//  });
   const arrayBufferToBase64 = (buffer) => {
     let binaryStr = "";
     const byteArray = new Uint8Array(buffer);
@@ -132,6 +124,35 @@ const Dashboard = () => {
       </div>
       <div className="feed">
         {Object.values(userEvents).map(function (event, i) {
+          return (
+            <div
+              className="card"
+              key={i}
+              onClick={(e) => {
+                setId(event._id);
+                handlerProceed(event._id);
+              }}
+            >
+              <img
+                src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(event.image.data.data)}`}
+                style={{ width: "100%" }}
+              />
+              <div className="container">
+                <h2 key={event._id}>{event.name} </h2>
+                <p key={event._id + 1}>
+                {new Date(event.startDate).toDateString()}
+                </p>
+                <p key={event._id + 99}>{event.startTime}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="d-header">
+        <h1>Explore Theatre Performances</h1>
+      </div>
+      <div className="feed">
+      {Object.values(userEvents).map(function (event, i) {
           return (
             <div
               className="card"

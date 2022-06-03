@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { growl } from "@crystallize/react-growl";
 import {useParams} from "react-router-dom";
+import Tags from './Tags.js';
 
 const EditEvent = () => {
   //const {id} = useParams();
@@ -13,9 +14,11 @@ const EditEvent = () => {
     startTime: "",
     location: "",
     description: "",
-    image: ""
+    image: "",
+    tags:[]
   }
   const [event, setEvent] = useState(initialValues);
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,6 +33,7 @@ const EditEvent = () => {
     .then((response) => {
       setEvent(response.data);
       setIsLoading(false);
+      setTags(response.data.tags);
     })
     .catch((error) => {
       console.log(error);
@@ -41,7 +45,8 @@ const EditEvent = () => {
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [image, setImage] = useState(null);
-
+  
+console.log(tags);
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmit) {
 
@@ -190,6 +195,10 @@ const EditEvent = () => {
           name="photo"
           onChange={uploadImage}
           required/> 
+           <div>
+            <h3>Select categories</h3>
+            <Tags tags={tags} setTags={setTags}/>
+          </div>
       </div>
       <div className="overview">
         <h1>Overview</h1>

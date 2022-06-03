@@ -86,7 +86,6 @@ router.get("/get-attending-ids", auth, async (req,res) => {
 router.get("/get-attending-events", auth, async (req,res) => {
   const id = req.query.id;
   try {
-
     const events = await Event.findOne({ _id: { $eq: id } });
     return res
     .status(200)
@@ -95,6 +94,21 @@ router.get("/get-attending-events", auth, async (req,res) => {
     return res
     .status(500)
     .send(err);
+  }
+})
+
+router.post("/remove-event", auth, async (req,res) => {
+  try {
+    const id = req.body.id;
+    const attending_event = await savedEvent.deleteOne({eventId: {$eq: id}});
+    return res
+    .status(200)
+    .json("Event removed succesfully")
+  } catch (error) {
+    console.log(error);
+    return res
+    .status(500)
+    .json(error);
   }
 })
 

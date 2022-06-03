@@ -41,6 +41,22 @@ const Attending = () => {
       navigate("/*")
     });
   }
+  const removeHandler = (e) => {
+    window.confirm('Are you sure you wish to remove this event from your attending events?') ? removeEvent() : ""
+  }
+
+
+  const removeEvent = () => {
+    axios
+    .post("/api/user/remove-event", {id: id})
+    .then((res) => {
+      console.log(res.data);
+      navigate("/myevents")
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 
   return isLoading ? (
     <div className="loader"></div>
@@ -94,12 +110,10 @@ const Attending = () => {
         </table>
         <div style={{margin: "30px"}}>
           <button 
-            className="create-btn"
-            >edit event details</button>
-          <button 
-            style= {{right: "330px"}} 
+            style= {{right: "20px"}} 
             className="create-btn discard"
-            >delete event</button>
+            onClick={removeHandler}
+            >remove event</button>
         </div>
        
       </div>

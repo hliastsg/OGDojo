@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
-import { useParams, useLocation, useNavigate} from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { growl } from "@crystallize/react-growl";
 import arrayBufferToBase64 from "base64-arraybuffer";
-import EditEvent from "./EditEvent"
+import EditEvent from "./EditEvent";
 
 const EventDetails = () => {
-
-  const {id} = useParams();
+  const { id } = useParams();
   const [event, setEvent] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -21,62 +20,66 @@ const EventDetails = () => {
     }
     return btoa(binaryStr);
   };
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchEventDetails();
-  },[])
+  }, []);
 
   const fetchEventDetails = () => {
     axios
-    .get("http://localhost:3006/api/event/get-event-details", {
-      params: { id },
-    })
-    .then((response) => {
-      setEvent(response.data);
-      setIsLoading(false);
-    })
-    .catch((error) => {
-      console.log(error);
-      navigate("/*")
-    });
-  }
+      .get("http://localhost:3006/api/event/get-event-details", {
+        params: { id },
+      })
+      .then((response) => {
+        setEvent(response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        navigate("/*");
+      });
+  };
 
   const deleteEventHandler = (e) => {
-    window.confirm('Are you sure you wish to delete this event?') ? deleteEvent() : ""
-  }
+    window.confirm("Are you sure you wish to delete this event?")
+      ? deleteEvent()
+      : "";
+  };
   const editEventHandler = (e) => {
     console.log(id);
-    localStorage.setItem("id", id)
-    navigate("/edit-event", {state: {id: id}})
-  }
+    localStorage.setItem("id", id);
+    navigate("/edit-event", { state: { id: id } });
+  };
 
   const deleteEvent = () => {
     axios
-    .post("http://localhost:3006/api/event/delete-event", {
-      id: id
-    })
-    .then((response) => {
-      navigate("/dashboard")
-      growl({
-        title: 'Dojo',
-        message: 'Event deleted successfully',
-        type: 'success'
-    });
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
+      .post("http://localhost:3006/api/event/delete-event", {
+        id: id,
+      })
+      .then((response) => {
+        navigate("/dashboard");
+        growl({
+          title: "Dojo",
+          message: "Event deleted successfully",
+          type: "success",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  
+  console.log(event.tags);
   return isLoading ? (
     <div className="loader"></div>
   ) : (
     <div>
       <img
         className="details-image"
-        src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(event.image.data.data)}`}
+        src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(
+          event.image.data.data
+        )}`}
       />
       <div className="event-overview">
         <h1>Event Details</h1>
@@ -107,6 +110,13 @@ const EventDetails = () => {
           </tbody>
           <tbody>
             <tr>
+              <td>Category:</td>
+              <td>{event.tags.join(",")}</td>
+            </tr>
+          </tbody>
+
+          <tbody>
+            <tr>
               <td>Atendees:</td>
               <td>{event.attendees}</td>
             </tr>
@@ -120,16 +130,18 @@ const EventDetails = () => {
             </tr>
           </tbody>
         </table>
-        <div style={{margin: "30px"}}>
-          <button 
-            className="create-btn"
-            onClick={editEventHandler} >edit event details</button>
-          <button 
-            style= {{right: "330px"}} 
+        <div style={{ margin: "30px" }}>
+          <button className="create-btn" onClick={editEventHandler}>
+            edit event details
+          </button>
+          <button
+            style={{ right: "330px" }}
             className="create-btn discard"
-            onClick={deleteEventHandler}>delete event</button>
+            onClick={deleteEventHandler}
+          >
+            delete event
+          </button>
         </div>
-       
       </div>
     </div>
   );

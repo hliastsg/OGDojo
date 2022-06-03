@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { growl } from "@crystallize/react-growl";
+import Tags from "./Tags.js"
 
 const NewEvent = () => {
   const initialValues = {
@@ -16,6 +17,9 @@ const NewEvent = () => {
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [image, setImage] = useState(null);
+  const [tags, setTags] = useState([
+    "Music", "Theatre", "Party"
+  ]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +66,17 @@ const NewEvent = () => {
     setIsSubmit(true);
   };
 
+  const getTags = (e) => {
+    e.preventDefault();
+    
+  };
+
   useEffect(() => {
+    const createOnClick = (e) => {
+      e.preventDefault();
+      setErrors(validate(eventDetails));
+      setIsSubmit(true);
+    };
     if (Object.keys(errors).length === 0 && isSubmit) {
 
       const data = new FormData();
@@ -72,6 +86,7 @@ const NewEvent = () => {
       data.append('startTime', eventDetails.startTime);
       data.append('description', eventDetails.description);
       data.append('location', eventDetails.location);
+      data.append('tags', tags);
       data.append('photo', image);
      
       axios
@@ -101,7 +116,7 @@ const NewEvent = () => {
       });
     }
   }, [errors]);
-
+  console.log(tags);
   return (
     <div style={{ display: "inline-flex" }}>
       <div className="new-event-container">
@@ -163,6 +178,10 @@ const NewEvent = () => {
           name="photo"
           onChange={uploadImage}
           required/> 
+          <div>
+            <h3>Select categories</h3>
+            <Tags tags={tags} setTags={setTags}/>
+          </div>
       </div>
       <div className="overview">
         <h1>Overview</h1>
