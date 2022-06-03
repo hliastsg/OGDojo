@@ -6,13 +6,13 @@ import { LoginError } from "../store/actions/authAction";
 import Cookies from "universal-cookie";
 import arrayBufferToBase64 from "base64-arraybuffer";
 
-
 const Dashboard = () => {
-
   const navigate = useNavigate();
   const author = localStorage.getItem("email");
   const [userEvents, setUserEvents] = useState([]);
+  const [userRecommendedEvents, setUserRecommendedEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoading2, setIsLoading2] = useState(true);
   const dispatch = useDispatch;
   const [id, setId] = useState();
   const [friendId, setFriendId] = useState();
@@ -20,22 +20,15 @@ const Dashboard = () => {
   const [searchResult, setSearchResult] = useState();
   const [noResult, setNoResult] = useState();
 
-  const isAuth = useSelector(state => state.auth.isAuthenticated);
-  
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+
   useEffect(() => {
     if (!isAuth) {
       dispatch(LoginError());
       navigate("/401");
     }
-  },[isAuth])
+  }, [isAuth]);
 
-  const AuthString = 'Bearer ' + 'OKMZG5JZFV2ZR7V4SY  '; 
-  let config = {
-    headers: {
-      'Access-Control-Allow-Origin': 'http://localhost:3006',
-      'Authorization': AuthString,
-    }
-  }
   const arrayBufferToBase64 = (buffer) => {
     let binaryStr = "";
     const byteArray = new Uint8Array(buffer);
@@ -45,23 +38,32 @@ const Dashboard = () => {
     return btoa(binaryStr);
   };
 
+  function getUserEvents() {
+    return axios.get("api/event/get-events", {
+      params: { author },
+    });
+  }
+  
+  function getUserRecommendedEvents() {
+    return axios.get("api/event/get-recommended-events", {
+      params: { author , tag: "Theatre"},
+    });
+  }
+
   useEffect(() => {
     fetchUserEvents();
   }, []);
 
   const fetchUserEvents = () => {
-    axios
-      .get("api/event/get-events", {
-        params: { author },
+  
+    Promise.all([getUserEvents(), getUserRecommendedEvents()])
+      .then(function (results) {
+
+        setUserEvents(results[0].data);
+        setUserRecommendedEvents(results[1].data);
+        setIsLoading(false)
       })
-      .then((response) => {
-        setUserEvents(response.data);
-        setIsLoading(false);
-        //window.location.href = "https://www.eventbrite.com/oauth/authorize?response_type=code&client_id=OKMZG5JZFV2ZR7V4SY&redirect_uri=http://localhost"
-      })
-      .catch((error) => {
-        console.log(error); 
-      });
+  
   };
 
   const createOnClick = (e) => {
@@ -69,26 +71,33 @@ const Dashboard = () => {
   };
 
   const handlerProceed = (id) => {
-    navigate(`/event-details/${id}`, {state: {id}})
+    navigate(`/event-details/${id}`, { state: { id } });
+  };
+
+  const handlerProceedRecommended = (id) => {
+    navigate(`/friends-events/${id}`)
   }
 
-  const searchFriendsHandler = (e) => {
+  const searchFriendsHandler = async (e) => {
     setSearch(e.target.value);
-    axios
-    .get("/api/account/search-friends", {
-      params: { search }
-    })
-    .then((response) => {
-      setSearchResult(response.data);
-      setFriendId(response.data._id);
-    })
-    .catch((error) => {
-      setNoResult(error.response.data);
-    });
-  }
+    await axios
+      .get("/api/account/search-friends", {
+        params: { search },
+      })
+      .then((response) => {
+        setSearchResult(response.data);
+        setFriendId(response.data._id);
+      })
+      .catch((error) => {
+        setNoResult(error.response.data);
+      });
+  };
   const searchFoundHandler = (e) => {
-    navigate(`/friends-events/${friendId}`, {state: {email: searchResult.email, name: searchResult.name} });
-  }
+    navigate(`/friends-events/${friendId}`, {
+      state: { email: searchResult.email, name: searchResult.name },
+    });
+  };
+
   return isLoading ? (
     <div className="loader"></div>
   ) : (
@@ -96,14 +105,16 @@ const Dashboard = () => {
       <div className="search-friends">
         <h1>Search for friends</h1>
         <p>You can search and find other public events from friends</p>
-        <input 
-        type="text" 
-        placeholder="Search by name, last name or email." 
-        onChange={searchFriendsHandler}
+        <input
+          type="text"
+          placeholder="Search by name, last name or email."
+          onChange={searchFriendsHandler}
         />
         <div>
-          { searchResult ? (
-            <a onClick={searchFoundHandler}>{searchResult.name + " " + searchResult.surname}</a>
+          {searchResult ? (
+            <a onClick={searchFoundHandler}>
+              {searchResult.name + " " + searchResult.surname}
+            </a>
           ) : (
             <p>{noResult}</p>
           )}
@@ -114,8 +125,13 @@ const Dashboard = () => {
           <div className="no-events">
             <i className="far fa-grimace"></i>
             <h1>You haven't created any events yet.</h1>
-            <p>To create an event, click on the button at the bottom right corner, or </p>
-            <a className="create-link" href="/create-event">here</a>
+            <p>
+              To create an event, click on the button at the bottom right
+              corner, or{" "}
+            </p>
+            <a className="create-link" href="/create-event">
+              here
+            </a>
           </div>
         ) : (
           <h1>{localStorage.getItem("name")}'s Events</h1>
@@ -140,7 +156,7 @@ const Dashboard = () => {
               <div className="container">
                 <h2 key={event._id}>{event.name} </h2>
                 <p key={event._id + 1}>
-                {new Date(event.startDate).toDateString()}
+                  {new Date(event.startDate).toDateString()}
                 </p>
                 <p key={event._id + 99}>{event.startTime}</p>
               </div>
@@ -152,26 +168,26 @@ const Dashboard = () => {
         <h1>Explore Theatre Performances</h1>
       </div>
       <div className="feed">
-      {Object.values(userEvents).map(function (event, i) {
+        {Object.values(userRecommendedEvents).map(function (e, i) {
+          console.log(e._id);
           return (
             <div
               className="card"
               key={i}
               onClick={(e) => {
-                setId(event._id);
-                handlerProceed(event._id);
+                handlerProceedRecommended(e._id);
               }}
             >
               <img
-                src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(event.image.data.data)}`}
+                src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(e.image?.data.data)}`}
                 style={{ width: "100%" }}
               />
               <div className="container">
-                <h2 key={event._id}>{event.name} </h2>
-                <p key={event._id + 1}>
-                {new Date(event.startDate).toDateString()}
+                <h2 key={e._id}>{e.name} </h2>
+                <p key={e._id + 1}>
+                  {new Date(e.startDate).toDateString()}
                 </p>
-                <p key={event._id + 99}>{event.startTime}</p>
+                <p key={e._id + 99}>{e.startTime}</p>
               </div>
             </div>
           );
@@ -183,5 +199,4 @@ const Dashboard = () => {
     </div>
   );
 };
-//.toString().split('T')[0]
 export default Dashboard;
