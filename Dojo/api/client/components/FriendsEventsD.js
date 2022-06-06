@@ -9,6 +9,7 @@ const FriendsEventDetails = () => {
 
   const {id} = useParams();
   const [event, setEvent] = useState({});
+  const [owner, setOwner] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -33,11 +34,34 @@ const FriendsEventDetails = () => {
     })
     .then((response) => {
       setEvent(response.data);
-      setIsLoading(false);
+      fetchOwnerOfEvent(response.data.author);
     })
     .catch((error) => {
       console.log(error);
     });
+  }
+
+  // useEffect(() => {
+  //   fetchOwnerOfEvent();
+  // },[isLoading])
+
+  const fetchOwnerOfEvent = (email) => {
+
+    if(isLoading) {
+      axios
+      .get("http://localhost:3006/api/user/get-owner", {
+        params: { email: email}
+      })
+      .then((res) => {
+        console.log(res.data);
+        setOwner(res.data.name + " " + res.data.surname);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+    
   }
 
   const attendEventHandler = (e) => {
@@ -80,33 +104,45 @@ const FriendsEventDetails = () => {
       <div className="event-overview">
         <h1>Event Details</h1>
         <table>
+        <tbody>
+            <tr>
+              <td style={{fontWeight: "320"}}>Owner:</td>
+              <td>{owner}</td>
+            </tr>
+          </tbody>
           <tbody>
             <tr>
-              <td>Event Name:</td>
+              <td style={{fontWeight: "320"}}>Event Name:</td>
               <td>{event.name}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
-              <td>Start Date:</td>
+              <td style={{fontWeight: "320"}}>Start Date:</td>
               <td>{new Date(event.startDate).toDateString()}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
-              <td>Start Time:</td>
+              <td style={{fontWeight: "320"}}>Start Time:</td>
               <td>{event.startTime}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
-              <td>Location:</td>
+              <td style={{fontWeight: "320"}}>Location:</td>
               <td>{event.location}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
-              <td>Atendees:</td>
+              <td style={{fontWeight: "320"}}>Category:</td>
+              <td>{event.tags.join(",")}</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td style={{fontWeight: "320"}}>Atendees:</td>
               <td>{event.attendees}</td>
             </tr>
           </tbody>
@@ -114,7 +150,7 @@ const FriendsEventDetails = () => {
         <table>
           <tbody id="description">
             <tr>
-              <td>Description:</td>
+              <td style={{fontWeight: "320"}}>Description:</td>
               <td>{event.description}</td>
             </tr>
           </tbody>
@@ -122,10 +158,6 @@ const FriendsEventDetails = () => {
         <div style={{margin: "30px"}}>
           <button 
             className="create-btn"
-            >add to favorites</button>
-          <button 
-            style= {{right: "295px"}} 
-            className="create-btn discard"
             onClick={attendEventHandler}>attend event</button>
         </div>
        

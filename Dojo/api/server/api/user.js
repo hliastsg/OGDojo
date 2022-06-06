@@ -1,6 +1,7 @@
 import express from "express";
 import Event from "../models/event"
 import savedEvent from "../models/saved";
+import Account from "../models/account.js"
 import auth from "../middlewear/auth";
 
 var router = express.Router();
@@ -101,9 +102,45 @@ router.post("/remove-event", auth, async (req,res) => {
   try {
     const id = req.body.id;
     const attending_event = await savedEvent.deleteOne({eventId: {$eq: id}});
+    const event = await Event.findOne({_id: {$eq: id}});
+    if (event) {
+      console.log(event.attendees);
+      event.attendees = event.attendees - 1;
+      event.save();
+    } else {
+      return res
+      .status(404)
+      .json("Event doesn't exists")
+    }
     return res
     .status(200)
     .json("Event removed succesfully")
+  } catch (error) {
+    console.log(error);
+    return res
+    .status(500)
+    .json(error);
+  }
+})
+
+router.get("/get-owner", auth, async (req,res) => {
+  try {
+    const email = req.query.email;
+    const owner = await Account.findOne({ email: {$eq: email}})
+
+    if (owner) {
+      const data = {
+        name: owner.name,
+        surname: owner.surname
+      }
+      return res
+      .status(200)
+      .json(data);
+    } else {
+      return res
+      .status(404)
+      .json("Event owner not found!");
+    }
   } catch (error) {
     console.log(error);
     return res

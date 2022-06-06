@@ -71,9 +71,13 @@ router.get("/get-recommended-events", auth, async (req, res) => {
   try {
     const events = await Event.find({ author :{$ne: author}, tags : tag });
 
-    return res.status(200).json(events);
+    return res
+    .status(200)
+    .json(events);
   } catch (err) {
-    return res.status(500).send(err);
+    return res
+    .status(500)
+    .send(err);
   }
 });
 

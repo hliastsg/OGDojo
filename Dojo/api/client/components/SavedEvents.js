@@ -40,7 +40,6 @@ const SavedEvents = () => {
     })
     .then((res) => {
       setEvents((prev) => [...prev, res.data])
-      setIsLoading(false);
     })
     .catch((err) => {
       console.log(err);
@@ -57,6 +56,7 @@ const SavedEvents = () => {
       }))
     };
     exec();
+    setIsLoading(false);
   },[eventIds])
 
   const handlerProceed = (id) => {

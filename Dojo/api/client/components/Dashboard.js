@@ -75,7 +75,8 @@ const Dashboard = () => {
   };
 
   const handlerProceedRecommended = (id) => {
-    navigate(`/friends-events/${id}`)
+    console.log(id);
+    navigate(`/friends-events-details/${id}`, { state: {id}});
   }
 
   const searchFriendsHandler = async (e) => {
@@ -146,7 +147,7 @@ const Dashboard = () => {
               key={i}
               onClick={(e) => {
                 setId(event._id);
-                handlerProceed(event._id);
+                handlerProceed(event._id, e);
               }}
             >
               <img
@@ -169,12 +170,11 @@ const Dashboard = () => {
       </div>
       <div className="feed">
         {Object.values(userRecommendedEvents).map(function (e, i) {
-          console.log(e._id);
           return (
             <div
               className="card"
               key={i}
-              onClick={(e) => {
+              onClick={() => {
                 handlerProceedRecommended(e._id);
               }}
             >
