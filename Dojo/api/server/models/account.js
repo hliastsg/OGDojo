@@ -23,6 +23,9 @@ const account = new Schema ({
     type: Date,
 
   },
+  interests: {
+    type: Array,
+  },
   token: { 
     type: String },
 })

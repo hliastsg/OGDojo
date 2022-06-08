@@ -1,6 +1,6 @@
 import express from "express";
 import Event from "../models/event"
-import savedEvent from "../models/saved";
+import SavedEvent from "../models/saved";
 import Account from "../models/account.js"
 import auth from "../middlewear/auth";
 
@@ -18,7 +18,7 @@ router.post("/attend-event", auth, async (req,res) => {
     }
     const event = await Event.findOne({ _id: { $eq: saveEvent.eventId } });
 
-    const attended = await savedEvent.find({userEmail: {$eq: saveEvent.userEmail}})
+    const attended = await SavedEvent.find({userEmail: {$eq: saveEvent.userEmail}})
     var exists = false;
     if(attended) {
       Object.values(attended).map(event => {
@@ -31,7 +31,7 @@ router.post("/attend-event", auth, async (req,res) => {
         .status(409)
         .json("You're already attending this event");
       } else {
-          savedEvent.create(saveEvent, (err, item) => {
+          SavedEvent.create(saveEvent, (err, item) => {
           if (err) {
             console.log(err);
           }
@@ -44,7 +44,7 @@ router.post("/attend-event", auth, async (req,res) => {
       }
     }
     else {
-      savedEvent.create(saveEvent, (err, item) => {
+      SavedEvent.create(saveEvent, (err, item) => {
         if (err) {
           console.log(err);
         }
@@ -65,7 +65,7 @@ router.post("/attend-event", auth, async (req,res) => {
 router.get("/get-attending-ids", auth, async (req,res) => {
   try {
     const email = req.query.userEmail;
-    const attending_events = await savedEvent.find({userEmail: {$eq: email}})
+    const attending_events = await SavedEvent.find({userEmail: {$eq: email}})
 
     if (attending_events) {
       return res
@@ -101,7 +101,7 @@ router.get("/get-attending-events", auth, async (req,res) => {
 router.post("/remove-event", auth, async (req,res) => {
   try {
     const id = req.body.id;
-    const attending_event = await savedEvent.deleteOne({eventId: {$eq: id}});
+    const attending_event = await SavedEvent.deleteOne({eventId: {$eq: id}});
     const event = await Event.findOne({_id: {$eq: id}});
     if (event) {
       console.log(event.attendees);
@@ -148,5 +148,49 @@ router.get("/get-owner", auth, async (req,res) => {
     .json(error);
   }
 })
+
+router.get("/get-favorite-tags", auth, async (req,res) => {
+  try {
+    const email = req.query.author;
+
+    const user = await Account.findOne({email: {$eq: email}})
+    if (user) {
+      return res
+      .status(200)
+      .json(user.interests);
+    } else {
+      return res
+      .status(404)
+      .json("User Not Found");
+    }
+  } catch (err) {
+    console.log(err);
+    return res 
+    .status(500)
+    .json(err)
+  }
+})
+
+// work in progress
+router.get("/get-events-attending", async (req, res) => {
+
+  const username = req.body.username;
+  try {
+    const events = await Event.find({ username });
+    const favorite_tag = await SavedEvent.aggregate([
+      {$project:{ username: username, count: {tag} }}, 
+    {$sort : {count : -1}}, 
+    {$limit : 1 }
+    ])
+    console.log(favorite_tag);
+    return res
+    .status(200)
+    .json(events);
+  } catch (err) {
+    return res
+    .status(500)
+    .send(err);
+  }
+});
 
 export default router;

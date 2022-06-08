@@ -5,6 +5,9 @@ import { growl } from "@crystallize/react-growl";
 import Tags from "./Tags.js"
 
 const NewEvent = () => {
+
+  window.scrollTo(0, 0);
+  
   const initialValues = {
     name: "",
     startDate: "",
@@ -220,9 +223,6 @@ const NewEvent = () => {
           </tbody>
         </table>
       </div>
-      <span>
-        <i className="fas fa-calendar" />
-      </span>
       <button className="create-btn" onClick={createOnClick}>
         create event
       </button>

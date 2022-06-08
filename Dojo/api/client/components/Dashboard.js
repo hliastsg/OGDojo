@@ -7,27 +7,30 @@ import Cookies from "universal-cookie";
 import arrayBufferToBase64 from "base64-arraybuffer";
 
 const Dashboard = () => {
+
   const navigate = useNavigate();
+  const dispatch = useDispatch;
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const author = localStorage.getItem("email");
   const [userEvents, setUserEvents] = useState([]);
   const [userRecommendedEvents, setUserRecommendedEvents] = useState([]);
+  const [secondRecommendedEvents, setSecondRecommendedEvents] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoading2, setIsLoading2] = useState(true);
-  const dispatch = useDispatch;
+  const [isFetched, setIsFetched] = useState(false);
   const [id, setId] = useState();
   const [friendId, setFriendId] = useState();
   const [search, setSearch] = useState();
   const [searchResult, setSearchResult] = useState();
   const [noResult, setNoResult] = useState();
 
-  const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
     if (!isAuth) {
       dispatch(LoginError());
       navigate("/401");
     }
-  }, [isAuth]);
+  }, []);
 
   const arrayBufferToBase64 = (buffer) => {
     let binaryStr = "";
@@ -44,24 +47,52 @@ const Dashboard = () => {
     });
   }
   
-  function getUserRecommendedEvents() {
-    return axios.get("api/event/get-recommended-events", {
-      params: { author , tag: "Theatre"},
-    });
+  // function getUserRecommendedEvents() {
+  //   return axios.get("api/event/get-recommended-events", {
+  //     params: { author , tag: favorites[0]},
+  //   });
+  // }
+
+  function getFavoriteTags() {
+    return axios.get("api/user/get-favorite-tags", {
+      params: {author}
+    })
   }
 
   useEffect(() => {
     fetchUserEvents();
   }, []);
 
+  useEffect(() => {
+   // const getUserRecommendedEvents = () => {
+     if (isFetched) {
+       axios.all([
+        axios.get("api/event/get-recommended-events", {
+          params: { author , tag: favorites[0]},
+        }),
+        axios.get("api/event/get-recommended-events", {
+          params: { author , tag: favorites[1]},
+        })
+       ])
+       .then(axios.spread((data1, data2) => {
+         setUserRecommendedEvents(data1.data);
+         setSecondRecommendedEvents(data2.data);
+         setIsLoading(false);
+       }))
+     }
+      
+   // }
+  }, [isFetched])
+
   const fetchUserEvents = () => {
   
-    Promise.all([getUserEvents(), getUserRecommendedEvents()])
+    Promise.all([getUserEvents(), getFavoriteTags()])
       .then(function (results) {
 
         setUserEvents(results[0].data);
-        setUserRecommendedEvents(results[1].data);
-        setIsLoading(false)
+        setFavorites(results[1].data);
+        setIsFetched(true);
+        //setUserRecommendedEvents(results[2].data);
       })
   
   };
@@ -98,7 +129,6 @@ const Dashboard = () => {
       state: { email: searchResult.email, name: searchResult.name },
     });
   };
-
   return isLoading ? (
     <div className="loader"></div>
   ) : (
@@ -165,11 +195,42 @@ const Dashboard = () => {
           );
         })}
       </div>
+      <div className="suggestions">
+        <h1>Suggested for you</h1>
+      </div>
       <div className="d-header">
-        <h1>Explore Theatre Performances</h1>
+        <h1>Explore {favorites[0]} Events</h1>
       </div>
       <div className="feed">
         {Object.values(userRecommendedEvents).map(function (e, i) {
+          return (
+            <div
+              className="card"
+              key={i}
+              onClick={() => {
+                handlerProceedRecommended(e._id);
+              }}
+            >
+              <img
+                src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(e.image?.data.data)}`}
+                style={{ width: "100%" }}
+              />
+              <div className="container">
+                <h2 key={e._id}>{e.name} </h2>
+                <p key={e._id + 1}>
+                  {new Date(e.startDate).toDateString()}
+                </p>
+                <p key={e._id + 99}>{e.startTime}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="d-header">
+        <h1>Explore {favorites[1]} Events</h1>
+      </div>
+      <div className="feed">
+        {Object.values(secondRecommendedEvents).map(function (e, i) {
           return (
             <div
               className="card"

@@ -19,7 +19,7 @@ const Tags = ({tags, setTags}) => {
     { tags.map((tag, index) => (
         <div className="tag-item" key={index}>
             <span className="text">{tag}</span>
-            <span className="close" onClick={() => removeTag(index)}>&times;</span>
+            <span className="close fa fa-times" onClick={() => removeTag(index)}></span>
         </div>
     )) }
     <input onKeyDown={handleKeyDown} type="text" className="tags-input" placeholder="Type something" />

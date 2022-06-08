@@ -1,5 +1,5 @@
 .tags-input-container{
-  border: #918888e3 solid 1px;
+  border: none;
   padding: .5em;
   width: min(80vw, 400px);
   margin-top: 1em;
@@ -7,6 +7,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: .5em;
+  animation: fadeIn 0.5s;
 }
 
 .tag-item{
@@ -30,6 +31,7 @@
   margin-left: .5em;
   font-size: 18px;
   cursor: pointer;
+
 }
 
 .tags-input{
@@ -37,4 +39,63 @@
   padding: .5em 0;
   border: none;
   outline: none;
+  animation: fadeIn 0.5s;
+}
+
+.prefered-tags {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+
+.prefered-tags h1 {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: lighter;
+  letter-spacing: 2px;
+  text-align: center;
+  margin: 20px;
+  animation: fadeIn 0.5s;
+}
+
+.prefered-tags input {
+  display: flex;
+  border: rgba(255, 255, 255, 0.85) solid 1px;
+  min-width: 400px;
+  padding: 15px;
+  margin: 0;
+  font-size: 18px;
+  background-color: transparent;
+  color: white;
+  transition: 0.5s;
+  animation: fadeIn 0.5s;
+  text-decoration-color: white ;
+}
+
+.prefered-tags input::placeholder {
+  color:rgba(255, 255, 255, 0.85);
+}
+
+.prefered-tags button {
+  animation: fadeIn 0.5s;
+}
+
+.suggestions h1{
+  font-family: 'SimSum' monospace;
+  position: relative;
+  font-size: 48px;
+  font-weight: 300;
+  color: #505050;
+  max-width: 1000px;
+  left: 140px;
+  top: 90px;
+  border-bottom: 0.5px solid  #91888879;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }

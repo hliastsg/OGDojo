@@ -19,9 +19,12 @@
   max-width: 1200px;
   font-family: 'SimSun';
   color: #505050;
-  font-weight: lighter;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   animation: fadeIn 1s;
+}
+
+.d-header h1 {
+  font-weight: 200 !important;
 }
 
 .expl-header {

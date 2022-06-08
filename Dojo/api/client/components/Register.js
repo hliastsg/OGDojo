@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import { LoginSuccess, LoginError } from '../store/actions/authAction';
 import { growl } from '@crystallize/react-growl';
+import PreferedTags from './PreferedTags.js';
 
 const Register = ({ nav }) => {
 
@@ -12,6 +13,9 @@ const Register = ({ nav }) => {
   const [isSubmit, setIsSubmit] = useState(false);
   const initialValues = { name: "", surname: "", email: "", password: "", dob: "" };
   const [formValues, setFormValues] = useState(initialValues);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const auth = useSelector(state => state.auth.isAuthenticated);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,34 +24,30 @@ const Register = ({ nav }) => {
     setErrors(validate(formValues));
     setIsSubmit(true);
   }
+  useEffect(() => {
+    if(auth) {
+      navigate("/dashboard")
+    }
+  },[])
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmit) {
       axios
-        .post('http://localhost:3006/api/account/register', {
-          name: formValues.name, surname: formValues.surname, email: formValues.email,
-          password: formValues.password, dateofbirth: formValues.dob})
-        .then((response) => {
-          localStorage.setItem("email",response.data.email);
-          localStorage.setItem("name", response.data.name);
-          localStorage.setItem("surname", response.data.surname);
-          localStorage.setItem("dob", response.data.dateofbirth.toString().split('T')[0]);
-          console.log(localStorage.getItem("dob"));
-          dispatch(LoginSuccess());
-          navigate("/dashboard");
-          growl({
-            title: 'Dojo',
-            message: 'Signed up succesfully'
-        });
-        })
-        .catch((err) => {
-          alert(err.response.data);
+      .post("/api/account/check-email", {
+        email: formValues.email
+      })
+      .then((res) => {
+        setIsRegistered(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response) {
           if (err.response.status === 409) {
-            dispatch(LoginError());
-            navigate("/login");
+            alert(err.response.data);
           }
-        })
-      
+       }
+      }
+      )
     }
   }, [errors]);
 
@@ -86,7 +86,7 @@ const Register = ({ nav }) => {
   }
   const isAuth = useSelector(state => state.auth.isAuthenticated);
 
-  return !isAuth ? (
+  return !isRegistered ? (
     <form onSubmit={registerUser}
       className={nav ? "forms active__ welcome" : "forms welcome"}
       autoComplete="off"
@@ -181,6 +181,6 @@ const Register = ({ nav }) => {
         <button className='back_btn'>BACK</button>
       </Link>
     </form>
-  ) : <Navigate to='/dashboard'/>
+  ) : <PreferedTags formValues={formValues}/>
 }
 export default Register;

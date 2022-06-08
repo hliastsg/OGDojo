@@ -70,20 +70,20 @@ const Navbar = ({nav, setNav}) => {
     : (
       <nav className="navbar home">
         <Link to="/dashboard">
-        <div className="logo">
+        <div className="logo-logged">
             <i className="fas fa-cat"></i>
             <h4>Dojo</h4>
         </div>
        </Link>
        <ul className={renderCssClasses()}>
          <Link to="/dashboard">
-          <li onClick={linkOnClick} className="link">Home</li>
+          <li onClick={linkOnClick} className="link-logged">Home</li>
          </Link>
          <Link to="/myevents">
-          <li onClick={linkOnClick} className="link">My Events</li>
+          <li onClick={linkOnClick} className="link-logged">My Events</li>
          </Link>
-         <Link to="/account/usr-config">
-          <li onClick={linkOnClick} className="link">Account</li>
+         <Link to="/explore">
+          <li onClick={linkOnClick} className="link-logged">Explore</li>
          </Link>
        </ul>
        <div className="user-options">

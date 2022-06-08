@@ -10,11 +10,33 @@ var router = express.Router();
 var app = express();
 app.use(cookieParser());
 
+router.post('/check-email', async(req,res) => {
+  try {
+    const email = req.body.email;
+
+    const exists = await Account.findOne({ email });
+    if (exists) {
+      return res
+      .status(409)
+      .send("Email Already Exists. Please Login");
+    } else {
+      return res
+      .status(200)
+      .json("Email Ok");
+    }
+  } catch (error) {
+    console.log(error);
+    return res
+    .status(500)
+    .json(error);
+  }
+})
+
 router.post('/register', async(req,res) => {
 
   try {
     // Get user input
-    const { name, surname, email, password, dateofbirth } = req.body;
+    const { name, surname, email, password, dateofbirth, interests } = req.body;
     // check if user already exist
     // Validate if user exist in our database
     const exists = await Account.findOne({ email });
@@ -33,6 +55,7 @@ router.post('/register', async(req,res) => {
       email: email.toLowerCase(), // sanitize: convert email to lowercase
       password: encryptedPassword,
       dateofbirth,
+      interests,
     });
 
     // Create token

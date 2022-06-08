@@ -25,6 +25,8 @@ import FriendsEventDetails from './FriendsEventsD.js';
 import SavedEvents from './SavedEvents.js';
 import Attending from './Attending.js';
 import Tags from './Tags.js';
+import PreferedTags from './PreferedTags.js';
+import Explore from './Explore.js';
 import store, {Persistor} from '../store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { GrowlScene } from '@crystallize/react-growl';
@@ -46,6 +48,7 @@ const App = () => {
             <Route exact path="/" element={<Header />} />
             <Route path="/about" element={< About nav={navLink} />} />
             <Route path="/register" element={< Register nav={navLink} />} />
+            <Route path="/register-options" element={< PreferedTags nav={navLink} />} />
             <Route path="/login" element={< Login nav={navLink} />} />
             <Route path="/401" element={<NotAuth />} />
             <Route path="/dashboard" element={<Auth><Dashboard/></Auth>} />
@@ -58,6 +61,7 @@ const App = () => {
             <Route path="/friends-events-details/:id" element={<Auth><FriendsEventDetails/></Auth>}/>
             <Route path="/myevents" element={<Auth><SavedEvents/></Auth>}/>
             <Route path="/attending-event/:id" element={<Auth><Attending/></Auth>}/>
+            <Route path="/explore" element={<Auth><Explore/></Auth>}/>
           </Routes>
         </Router>
       </PersistGate>
