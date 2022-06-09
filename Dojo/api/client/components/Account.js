@@ -27,12 +27,17 @@ const Account = () => {
   return (
     <div>
       <nav className="menubar">  
-      <ul className="fa-ul">
-        <Link to="/account/usr-config"><li >
+      <ul className="fa-ul" >
+        <Link to="/account/usr-config">
+          <li style={{padding:"10px"}}>
           <i className="fa fa-user-cog menu-icon"></i>
           <span className='settings-btn'>Account</span></li>
         </Link>
-        <li style={{padding:"5px"}} onClick={logoutHandler}>
+        <Link to="/account/pref-config"><li style={{padding:"10px"}}>
+          <i className="fas fa-adjust menu-icon"></i>
+          <span className='settings-btn'>Preferences</span></li>
+        </Link>
+        <li style={{padding:"10px"}} onClick={logoutHandler}>
           <i className="fa fa-sign-out-alt menu-icon"></i>
           <span className='settings-btn'>Logout</span></li>
        </ul>

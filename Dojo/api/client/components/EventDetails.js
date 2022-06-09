@@ -86,47 +86,47 @@ const EventDetails = () => {
         <table>
           <tbody>
             <tr>
-              <td>Event Name:</td>
-              <td>{event.name}</td>
+              <td style={{fontWeight: "400"}}>Event Name:</td>
+              <td style={{fontWeight: "300",paddingLeft: "30px"}}>{event.name}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
-              <td>Start Date:</td>
-              <td>{new Date(event.startDate).toDateString()}</td>
+              <td style={{fontWeight: "400"}}>Start Date:</td>
+              <td style={{fontWeight: "300",paddingLeft: "30px"}}>{new Date(event.startDate).toDateString()}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
-              <td>Start Time:</td>
-              <td>{event.startTime}</td>
+              <td style={{fontWeight: "400"}}>Start Time:</td>
+              <td style={{fontWeight: "300",paddingLeft: "30px"}}>{event.startTime}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
-              <td>Location:</td>
-              <td>{event.location}</td>
+              <td style={{fontWeight: "400"}}>Location:</td>
+              <td style={{fontWeight: "300",paddingLeft: "30px"}}>{event.location}</td>
             </tr>
           </tbody>
           <tbody>
             <tr>
-              <td>Category:</td>
-              <td>{event.tags.join(",")}</td>
+              <td style={{fontWeight: "400"}}>Category:</td>
+              <td style={{fontWeight: "300",paddingLeft: "30px"}}>{event.tags.join(",")}</td>
             </tr>
           </tbody>
 
           <tbody>
             <tr>
-              <td>Atendees:</td>
-              <td>{event.attendees}</td>
+              <td style={{fontWeight: "400"}}>Atendees:</td>
+              <td style={{fontWeight: "300",paddingLeft: "30px"}}>{event.attendees}</td>
             </tr>
           </tbody>
         </table>
         <table>
           <tbody id="description">
             <tr>
-              <td>Description:</td>
-              <td>{event.description}</td>
+              <td style={{fontWeight: "400"}}>Description:</td>
+              <td style={{fontWeight: "300",paddingLeft: "30px"}}>{event.description}</td>
             </tr>
           </tbody>
         </table>

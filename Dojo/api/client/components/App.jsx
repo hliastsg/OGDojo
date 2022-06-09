@@ -27,6 +27,7 @@ import Attending from './Attending.js';
 import Tags from './Tags.js';
 import PreferedTags from './PreferedTags.js';
 import Explore from './Explore.js';
+import PreferencesConfig from './PreferencesConfig.js'
 import store, {Persistor} from '../store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { GrowlScene } from '@crystallize/react-growl';
@@ -62,6 +63,7 @@ const App = () => {
             <Route path="/myevents" element={<Auth><SavedEvents/></Auth>}/>
             <Route path="/attending-event/:id" element={<Auth><Attending/></Auth>}/>
             <Route path="/explore" element={<Auth><Explore/></Auth>}/>
+            <Route path="/account/pref-config" element={<Auth><PreferencesConfig/></Auth>}/>
           </Routes>
         </Router>
       </PersistGate>

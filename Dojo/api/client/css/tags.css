@@ -99,3 +99,43 @@
   0% {opacity:0;}
   100% {opacity:1;}
 }
+
+.prefered-tags-config {
+  display: flex;
+  margin-top: 30px;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+
+.prefered-tags-config h1 {
+  color: #918888e3;;
+  font-weight: lighter;
+  text-align: center;
+  font-size: 25px;
+  animation: fadeIn 0.5s;
+}
+
+.prefered-tags-config input {
+  display: flex;
+  border: #918888e3 1px solid;
+  min-width: 400px;
+  padding: 15px;
+  margin: 0;
+  font-size: 18px;
+  background-color: transparent;
+  color: #918888e3;
+  transition: 0.5s;
+  animation: fadeIn 0.5s;
+  text-decoration-color: white ;
+}
+
+.prefered-tags-config input::placeholder {
+  color:#918888e3;
+}
+
+.prefered-tags-config button {
+  animation: fadeIn 0.5s;
+}

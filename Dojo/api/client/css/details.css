@@ -99,16 +99,35 @@
   margin-top: 10px;
 }
 
+.categories-feed {
+  display: flex;
+  position: absolute;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-width: 1200px;
+  top: 180px;
+  left: 150px;
+  margin-top: 80px;
+  margin-bottom: 10px;
+  animation: fadeIn 1s;
+  white-space:pre-wrap;
+  z-index: -1;
+}
+
 .categories-header {
   display: inline-flex;
   align-items: center;
   position: relative;
-  max-width: 1200px;
+  font-size: 20px;
+  max-width: 600px;
+  top: 60px;
+  left: 20px;
   font-family: 'SimSun';
   color: #505050;
   letter-spacing: 1px;
   animation: fadeIn 1s;
   cursor: pointer;
+  z-index: 900;
 }
 
 .categories {
@@ -119,30 +138,53 @@
   box-shadow: 0 1px 2px 0 rgba(208, 208, 208, 0.319), 0 2px 10px 0 rgba(0, 0, 0, 0.19);
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  height: 30vh;
+  margin-top: 60px;
+  min-height: 30vh;
   width: 500px;
   list-style: none !important;
-  margin-top: 10px;
   opacity: 0;
   pointer-events: none;
   transform: translateY(10px);
   transition: 0.4s ease;
+  z-index: 99999999 !important;
 }
 
 .categories ul {
   list-style: none;
 }
 
-.categories li {
-  padding: 10px;
-  font-size: 18px;
+.list {
+  padding: 15px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  background-image: linear-gradient(
+    to right,
+    #e8bdee,
+    #e8bdee 50%,
+    #918888 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  transition: all 0.4s ease-in-out;;
 }
+
 .categories-header i {
   font-size: larger;
   cursor: pointer;
   padding-left: 5px;
-  animation: 0.3s fadeIn;
+}
+
+.list:hover{
+  background-position: 0;
+}
+.list:hover::before{
+  width: 100%;
 }
 .categories-header:hover i{
   animation: 0.3s fadeIn;
@@ -152,3 +194,17 @@
   pointer-events: all;
   transform: translateY(0);
 }
+
+
+#title {
+  font-family: 'SimSum';
+  font-size: 28px;
+  font-weight: 100;
+  color:#505050c0;
+  position: absolute;
+  top: 250px;
+  left: 170px;
+  z-index: -1;
+  animation: 1s fadeIn;
+}
+
