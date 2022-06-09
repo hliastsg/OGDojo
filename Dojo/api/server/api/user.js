@@ -193,4 +193,53 @@ router.get("/get-events-attending", async (req, res) => {
   }
 });
 
+router.get("/get-user-interests", async (req,res) => {
+  try {
+    const email = req.query.email;
+    const user = await Account.findOne({email: {$eq: email}})
+    if (user) {
+      return res
+      .status(200)
+      .json(user.interests);
+    } else {
+      return res
+      .status(404)
+      .json("User Not Found");
+    }
+  } catch (error) {
+    return res
+    .status(500)
+    json(err);
+  }
+})
+
+router.post("/update-user-interests", async (req,res) => {
+  try {
+    const {email, interests} = req.body;
+    const user = await Account.findOne({email: {$eq: email}})
+    if (user) {
+      if (interests.length != 0) {
+        user.interests = interests;
+        user.save();
+        return res
+        .status(200)
+        .json("Updated profile interests successfully!");
+      }
+      else {
+        return res
+        .status(404)
+        .json("No interests where selected")
+      }
+    } else {
+      return res
+      .status(404)
+      .json("User Not Found");
+    }
+  } catch (err) {
+    return res
+    .status(500)
+    .json(err)
+  }
+})
+
 export default router;

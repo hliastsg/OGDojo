@@ -17,8 +17,8 @@
 
 .home {
   font-family: Helvetica;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   background-color: #e2d9e986;
   box-shadow: 0 1px 2px 0 rgba(208, 208, 208, 0.319), 0 2px 10px 0 rgba(0, 0, 0, 0.19);
   border-bottom: 0.5px solid  #91888879;;
@@ -83,6 +83,7 @@
   color: #918888e3;
   font-weight: lighter;
   font-size: medium;
+  transition: all 0.5s;
 }
 
 .config {
@@ -205,6 +206,13 @@
   font-family: Helvetica;
   color: #918888e3;
   font-weight: lighter;
+  transition: all 0.5s;
+}
+
+.settings-btn:hover {
+  text-shadow: 0 0 15px #505050;
+  color: #505050;
+  transition: all 0.5s;
 }
 
 @media screen and (max-width: 850px) {

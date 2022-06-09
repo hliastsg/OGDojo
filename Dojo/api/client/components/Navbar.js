@@ -88,7 +88,7 @@ const Navbar = ({nav, setNav}) => {
        </ul>
        <div className="user-options">
         <i className="fa fa-user-circle menu-icon"></i>
-        <span>{localStorage.getItem("name")}</span>
+        <span>&nbsp;{localStorage.getItem("name")}</span>
         <div className="dropdown">
           <Link to="/account/usr-config"> 
            <li className="drop-link">Settings</li>

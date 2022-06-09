@@ -8,7 +8,7 @@ const SavedEvents = () => {
   const userEmail = localStorage.getItem("email");
   const [eventIds, setEventIds] = useState([]);
   const [events, setEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [id, setId] = useState();
   const navigate = useNavigate();
 
@@ -46,7 +46,7 @@ const SavedEvents = () => {
     })
   }
   useEffect(() => {
-    fetchAttendingIds();
+    fetchAttendingIds()
   },[])
 
   useEffect(() => {
@@ -55,49 +55,103 @@ const SavedEvents = () => {
         fetchAttendingEvents(event.eventId)
       }))
     };
-    exec();
-    setIsLoading(false);
+    exec()
+    .then(() => {
+      setIsLoading(false);
+    });
   },[eventIds])
 
   const handlerProceed = (id) => {
     navigate(`/attending-event/${id}`, {state: {id: id}})
   }
 
-  return isLoading ? (
-    <div className="loader"></div>
-  ) : (
-    <div>
+  if (isLoading) {
+    return (
+      <div className="loader"></div>
+    )
+  } else if (events.length === 0) {
+    return (
       <div className="d-header">
-        <h1>Events that you are attending</h1>
+      <div className="no-events">
+        <i className="far fa-grimace"></i>
+        <h1>You aren't attending any events yet.</h1>
+        <p>To find events that might interest you, visit your dashboard or explore {" "}</p>
+        <a className="create-link" style={{paddingLeft:"10px"}} href="/explore">
+          here
+        </a>
       </div>
-      <div className="feed" style={{right: "300px"}}>
-        {Object.values(events).map(function (event, i) {
-          return (
-            <div
-              className="card"
-              key={i}
-              onClick={(e) => {
-                setId(event._id);
-                handlerProceed(event._id);
-              }}
-            >
-              <img
-                src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(event.image.data.data)}`}
-                style={{ width: "100%" }}
-              />
-              <div className="container">
-                <h2 key={event._id}>{event.name} </h2>
-                <p key={event._id + 1}>
-                {new Date(event.startDate).toDateString()}
-                </p>
-                <p key={event._id + 99}>{event.startTime}</p>
-              </div>
-            </div>
-          );
-        })}
       </div>
-    </div>
-    
-  )
+    )
+  } else {
+    return (
+      <div>
+      <div className="d-header">
+      <h1>Events that you are attending</h1>
+      </div>
+      <div className="feed">
+      {Object.values(events).map(function (event, i) {
+      return (
+        <div
+          className="card"
+          key={i}
+          onClick={(e) => {
+            setId(event._id);
+            handlerProceed(event._id);
+          }}
+        >
+          <img
+            src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(event.image.data.data)}`}
+            style={{ width: "100%" }}
+          />
+          <div className="container">
+            <h2 key={event._id}>{event.name} </h2>
+            <p key={event._id + 1}>
+            {new Date(event.startDate).toDateString()}
+            </p>
+            <p key={event._id + 99}>{event.startTime}</p>
+          </div>
+        </div>
+        );
+      })}
+      </div>
+      </div>
+    )
+  }
+
+  // return isLoading ? (
+  //   <div className="loader"></div>
+  // ) : (
+  //   <div>
+  //     <div className="d-header">
+  //         <h1>Events that you are attending</h1>
+  //          <div className="feed" style={{right: "300px"}}>
+  //         {Object.values(events).map(function (event, i) {
+  //           return (
+  //             <div
+  //               className="card"
+  //               key={i}
+  //               onClick={(e) => {
+  //                 setId(event._id);
+  //                 handlerProceed(event._id);
+  //               }}
+  //             >
+  //               <img
+  //                 src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(event.image.data.data)}`}
+  //                 style={{ width: "100%" }}
+  //               />
+  //               <div className="container">
+  //                 <h2 key={event._id}>{event.name} </h2>
+  //                 <p key={event._id + 1}>
+  //                 {new Date(event.startDate).toDateString()}
+  //                 </p>
+  //                 <p key={event._id + 99}>{event.startTime}</p>
+  //               </div>
+  //             </div>
+  //           );
+  //         })}
+  //       </div>  
+  //     </div>
+  //   </div>
+  // )
 }
 export default SavedEvents;

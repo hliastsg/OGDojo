@@ -65,7 +65,6 @@ const FriendsEventDetails = () => {
   }
 
   const attendEventHandler = (e) => {
-
     axios
     .post("/api/user/attend-event", {
       id: id,
@@ -93,6 +92,13 @@ const FriendsEventDetails = () => {
     });
   }
 
+  const ownerOnClick = () => {
+    //   navigate(`/friends-events/${friendId}`, {
+    //   state: { email: searchResult.email, name: searchResult.name },
+    // });
+  
+  }
+  console.log(owner);
   return isLoading ? (
     <div className="loader"></div>
   ) : (
