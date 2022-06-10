@@ -11,6 +11,8 @@ const FriendsEventDetails = () => {
   const [event, setEvent] = useState({});
   const [owner, setOwner] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [friendId, setFriendId] = useState();
+  const [friendEmail, setFriendEmail] = useState();
   const navigate = useNavigate();
 
   const arrayBufferToBase64 = (buffer) => {
@@ -41,10 +43,6 @@ const FriendsEventDetails = () => {
     });
   }
 
-  // useEffect(() => {
-  //   fetchOwnerOfEvent();
-  // },[isLoading])
-
   const fetchOwnerOfEvent = (email) => {
 
     if(isLoading) {
@@ -53,8 +51,9 @@ const FriendsEventDetails = () => {
         params: { email: email}
       })
       .then((res) => {
-        console.log(res.data);
         setOwner(res.data.name + " " + res.data.surname);
+        setFriendId(res.data.id);
+        setFriendEmail(res.data.email);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -92,13 +91,12 @@ const FriendsEventDetails = () => {
     });
   }
 
-  const ownerOnClick = () => {
-    //   navigate(`/friends-events/${friendId}`, {
-    //   state: { email: searchResult.email, name: searchResult.name },
-    // });
+  const ownerOnClick = (e) => {
+      navigate(`/friends-events/${friendId}`, {
+      state: { email: friendEmail, name: owner }
+    });
   
   }
-  console.log(owner);
   return isLoading ? (
     <div className="loader"></div>
   ) : (
@@ -113,7 +111,8 @@ const FriendsEventDetails = () => {
         <tbody>
             <tr>
               <td style={{fontWeight: "400"}}>Owner:</td>
-              <td style={{fontWeight: "300",paddingLeft: "30px"}}>{owner}</td>
+              <td style={{fontWeight: "300",paddingLeft: "30px",cursor:"pointer"}}
+              onClick={ownerOnClick}>{owner}</td>
             </tr>
           </tbody>
           <tbody>

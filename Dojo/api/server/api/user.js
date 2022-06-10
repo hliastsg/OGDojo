@@ -130,8 +130,10 @@ router.get("/get-owner", auth, async (req,res) => {
 
     if (owner) {
       const data = {
+        id: owner._id,
         name: owner.name,
-        surname: owner.surname
+        surname: owner.surname,
+        email: owner.email
       }
       return res
       .status(200)
@@ -172,7 +174,7 @@ router.get("/get-favorite-tags", auth, async (req,res) => {
 })
 
 // work in progress
-router.get("/get-events-attending", async (req, res) => {
+router.get("/get-events-attending", auth, async (req, res) => {
 
   const username = req.body.username;
   try {
@@ -193,7 +195,7 @@ router.get("/get-events-attending", async (req, res) => {
   }
 });
 
-router.get("/get-user-interests", async (req,res) => {
+router.get("/get-user-interests", auth, async (req,res) => {
   try {
     const email = req.query.email;
     const user = await Account.findOne({email: {$eq: email}})
@@ -213,7 +215,7 @@ router.get("/get-user-interests", async (req,res) => {
   }
 })
 
-router.post("/update-user-interests", async (req,res) => {
+router.post("/update-user-interests", auth, async (req,res) => {
   try {
     const {email, interests} = req.body;
     const user = await Account.findOne({email: {$eq: email}})
@@ -230,6 +232,26 @@ router.post("/update-user-interests", async (req,res) => {
         .status(404)
         .json("No interests where selected")
       }
+    } else {
+      return res
+      .status(404)
+      .json("User Not Found");
+    }
+  } catch (err) {
+    return res
+    .status(500)
+    .json(err)
+  }
+})
+
+router.get("/get-user-id",auth, async (req,res) => {
+  try {
+    const email = req.query.email;
+    const user = await Account.findOne({email: {$eq: email}})
+    if (user) {
+      return res
+      .status(200)
+      .json(user._id);
     } else {
       return res
       .status(404)

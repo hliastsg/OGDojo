@@ -23,7 +23,7 @@ const Dashboard = () => {
   const [search, setSearch] = useState();
   const [searchResult, setSearchResult] = useState();
   const [noResult, setNoResult] = useState();
-
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     if (!isAuth) {
@@ -111,6 +111,11 @@ const Dashboard = () => {
   }
 
   const searchFriendsHandler = async (e) => {
+    e.preventDefault();
+    if (e.target.value.length === 0) {
+      setIsClicked(false);
+    }
+   if (e.target.value.length >= 3) {
     setSearch(e.target.value);
     await axios
       .get("/api/account/search-friends", {
@@ -118,17 +123,32 @@ const Dashboard = () => {
       })
       .then((response) => {
         setSearchResult(response.data);
-        setFriendId(response.data._id);
+        setFriendId(response.data.id);
+        setIsClicked(true);
+
       })
       .catch((error) => {
         setNoResult(error.response.data);
       });
+    }
   };
-  const searchFoundHandler = (e) => {
-    navigate(`/friends-events/${friendId}`, {
-      state: { email: searchResult.email, name: searchResult.name },
+  
+  const searchFoundHandler = (id, email, name, surname) => {
+    navigate(`/friends-events/${id}`, {
+      state: { email: email, name: name , surname: surname},
     });
   };
+
+  const renderCssClass = () => {
+    let classes = "categories";
+
+    if (isClicked) {
+      classes += " active-drop";
+    }
+    return classes;
+  };
+  console.log(searchResult);
+
   return isLoading ? (
     <div className="loader"></div>
   ) : (
@@ -141,11 +161,32 @@ const Dashboard = () => {
           placeholder="Search by name, last name or email."
           onChange={searchFriendsHandler}
         />
+         
         <div>
           {searchResult ? (
-            <a onClick={searchFoundHandler}>
-              {searchResult.name + " " + searchResult.surname}
-            </a>
+            <div style={{marginTop:"0px",minHeight:"5vh"}} className={renderCssClass()}>
+            <ul>
+              {Object.values(searchResult).map(function (result, i) {
+                if (Object.keys(searchResult).length === 0) {
+                  return (
+                  <p>{noResult}</p>
+                  )
+                } else {
+                return (
+                  <li
+                    key={i}
+                    className="list"
+                    value={result}
+                    onClick={() => {
+                      searchFoundHandler(result.id, result.email, result.name, result.surname);
+                    }}
+                  >
+                    {result.name + " " + result.surname}
+                  </li>
+                );}
+              })}
+            </ul>
+          </div>
           ) : (
             <p>{noResult}</p>
           )}

@@ -23,7 +23,7 @@ router.post("/create-event", uploadImage, auth, async (req, res) => {
       image: {
         data: fs.readFileSync(
           path.join(
-            "/Users/eliastsg/Desktop/thesis/OGDojo/Dojo/api/uploads/" +
+            "/Users/thodorispachis/Desktop/dojo/OGDojo/Dojo/api/uploads/" +
               req.file.filename
           )
         ),

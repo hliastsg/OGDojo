@@ -11,6 +11,7 @@ const Friends = () => {
   const [userEvents, setUserEvents] = useState([]);
   const [id, setId] = useState();
   const author = location.state.email;
+  console.log(author);
 
   const arrayBufferToBase64 = (buffer) => {
     let binaryStr = "";

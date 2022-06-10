@@ -163,11 +163,19 @@ router.post('/edit', auth, async(req,res) => {
 
 });
 router.get("/search-friends", auth, async (req,res) => {
+  
   try {
     const user = req.query.search;
 //$or: [ {name: user}, {surname: user}, {email: user} ]
-    const userFound = await Account.findOne( {$or: [ {name: user}, {surname: user}, {email: user} ]})
-    if (!userFound) {
+// FIND ALL USERS THAT THEIR USERNAME CONTAINTS CONST USER
+    const userFound = await Account.find( {
+      "name": {
+        "$regex": user,
+        "$options": "i"
+      }
+      // $or: [ {name: /user/i}, {surname: /user/i}, {email: /user/i} ]
+    })
+    if (userFound.length === 0) {
       return res
       .status(404)
       .json("No result")

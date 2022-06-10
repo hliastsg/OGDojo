@@ -10,7 +10,14 @@ import Tags from './Tags.js'
 const PreferedTags = ({formValues}) => {
 
   const [tags, setTags] = useState([
-    'Music', 'Theatre', 'Party', 'Cinema', 'Performance', 'Conference', 'Seminar', 'Photography'
+    "Music",
+    "Concert",
+    "Theatre",
+    "Party",
+    "Arts",
+    "Performance",
+    "Photography",
+    "Conference",
   ])
   const dispatch = useDispatch();
   const navigate = useNavigate();
