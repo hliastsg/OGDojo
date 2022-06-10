@@ -46,12 +46,6 @@ const Dashboard = () => {
       params: { author },
     });
   }
-  
-  // function getUserRecommendedEvents() {
-  //   return axios.get("api/event/get-recommended-events", {
-  //     params: { author , tag: favorites[0]},
-  //   });
-  // }
 
   function getFavoriteTags() {
     return axios.get("api/user/get-favorite-tags", {
@@ -64,7 +58,6 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-   // const getUserRecommendedEvents = () => {
      if (isFetched) {
        axios.all([
         axios.get("api/event/get-recommended-events", {
@@ -80,19 +73,15 @@ const Dashboard = () => {
          setIsLoading(false);
        }))
      }
-      
-   // }
   }, [isFetched])
 
   const fetchUserEvents = () => {
   
     Promise.all([getUserEvents(), getFavoriteTags()])
       .then(function (results) {
-
         setUserEvents(results[0].data);
         setFavorites(results[1].data);
         setIsFetched(true);
-        //setUserRecommendedEvents(results[2].data);
       })
   
   };
@@ -106,7 +95,6 @@ const Dashboard = () => {
   };
 
   const handlerProceedRecommended = (id) => {
-    console.log(id);
     navigate(`/friends-events-details/${id}`, { state: {id}});
   }
 
@@ -147,7 +135,6 @@ const Dashboard = () => {
     }
     return classes;
   };
-  console.log(searchResult);
 
   return isLoading ? (
     <div className="loader"></div>
@@ -164,28 +151,28 @@ const Dashboard = () => {
          
         <div>
           {searchResult ? (
-            <div style={{marginTop:"0px",minHeight:"5vh"}} className={renderCssClass()}>
-            <ul>
-              {Object.values(searchResult).map(function (result, i) {
-                if (Object.keys(searchResult).length === 0) {
+            <div style={{marginTop:"0px",marginLeft:"10px",minHeight:"5vh", maxWidth:"400px"}} 
+            className={renderCssClass()}>
+              {searchResult.ok === 0 ? (
+                <p style={{padding: "8px", alignSelf:"center", paddingBottom: "10px"}}>No result</p>
+              ) : (
+                <ul>
+                {Object.values(searchResult).map(function (result, i) {
                   return (
-                  <p>{noResult}</p>
-                  )
-                } else {
-                return (
-                  <li
-                    key={i}
-                    className="list"
-                    value={result}
-                    onClick={() => {
-                      searchFoundHandler(result.id, result.email, result.name, result.surname);
-                    }}
-                  >
-                    {result.name + " " + result.surname}
-                  </li>
-                );}
-              })}
-            </ul>
+                    <li
+                      key={i}
+                      className="list"
+                      value={result}
+                      onClick={() => {
+                        searchFoundHandler(result.id, result.email, result.name, result.surname);
+                      }}
+                    >
+                      {result.name + " " + result.surname}
+                    </li>
+                  );
+                })}
+              </ul>
+              )}
           </div>
           ) : (
             <p>{noResult}</p>
