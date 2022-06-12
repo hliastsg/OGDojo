@@ -10,7 +10,7 @@ export const LoginSuccess = () => {
 export const LoginError = () => {
   return {
     type: 'LOGIN_ERROR',
-    payload: null
+    payload: user
   }
 }
 

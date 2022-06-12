@@ -19,11 +19,20 @@
   font-family: Helvetica;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
+  text-decoration : #505050;
   background-color: #e2d9e986;
   box-shadow: 0 1px 2px 0 rgba(208, 208, 208, 0.319), 0 2px 10px 0 rgba(0, 0, 0, 0.19);
   border-bottom: 0.5px solid  #91888879;;
   transition: all 0.5s;
   z-index: 999999999;
+}
+
+.home h1 {
+  color: #505050;
+}
+
+.home h2 {
+  color: #505050;
 }
 
 .logo-logged {

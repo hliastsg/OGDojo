@@ -25,7 +25,6 @@ const PreferencesConfig = () => {
   useEffect(() => {
     fetchUserInterests();
   }, []);
-  console.log(tags);
 
   const saveOnClick = () => {
     axios

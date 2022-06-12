@@ -9,7 +9,7 @@ import arrayBufferToBase64 from "base64-arraybuffer";
 const Dashboard = () => {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const author = localStorage.getItem("email");
   const [userEvents, setUserEvents] = useState([]);
@@ -24,13 +24,6 @@ const Dashboard = () => {
   const [searchResult, setSearchResult] = useState();
   const [noResult, setNoResult] = useState();
   const [isClicked, setIsClicked] = useState(false);
-
-  useEffect(() => {
-    if (!isAuth) {
-      dispatch(LoginError());
-      navigate("/401");
-    }
-  }, []);
 
   const arrayBufferToBase64 = (buffer) => {
     let binaryStr = "";

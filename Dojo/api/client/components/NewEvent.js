@@ -119,7 +119,7 @@ const NewEvent = () => {
       });
     }
   }, [errors]);
-  console.log(tags);
+
   return (
     <div style={{ display: "inline-flex" }}>
       <div className="new-event-container">

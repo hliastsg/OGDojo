@@ -16,10 +16,10 @@ const NotFound = () => {
     </div>
       ) : (
         <div className='showcase welcome'>
-      <h1>404</h1>
+      <h1>404 Not Found</h1>
       <h2>Sorry, looks like the page you are looking for doesn't exist, or the link may be broken.</h2>
-        <Link to="/">
-        <button className='login_btn'>HOME PAGE</button>
+        <Link to="/" style={{color: "#505050"}}>
+        <button className='login_btn' style={{color: "#505050"}}>HOME PAGE</button>
       </Link>
     </div>
   )
