@@ -68,6 +68,7 @@ router.get("/get-events", auth, async (req, res) => {
 router.get("/get-recommended-events", auth, async (req, res) => {
   const author = req.query.author;
   const tag = req.query.tag;
+
   try {
     const events = await Event.find({ author :{$ne: author}, tags : tag });
 

@@ -24,6 +24,7 @@ const Dashboard = () => {
   const [searchResult, setSearchResult] = useState();
   const [noResult, setNoResult] = useState();
   const [isClicked, setIsClicked] = useState(false);
+  const [category, setCategory] = useState([]);
 
   const arrayBufferToBase64 = (buffer) => {
     let binaryStr = "";
@@ -52,12 +53,22 @@ const Dashboard = () => {
 
   useEffect(() => {
      if (isFetched) {
+      let randomN = Math.floor(Math.random() * favorites.length);
+      let randomN_ = Math.floor(Math.random() * favorites.length);
+      while(true) {
+        randomN_ = Math.floor(Math.random() * favorites.length);
+        if (randomN != randomN_) {
+          break;
+        }
+      }
+      setCategory([favorites[randomN], favorites[randomN_]])
+
        axios.all([
         axios.get("api/event/get-recommended-events", {
-          params: { author , tag: favorites[0]},
+          params: { author , tag: favorites[randomN]},
         }),
         axios.get("api/event/get-recommended-events", {
-          params: { author , tag: favorites[1]},
+          params: { author , tag: favorites[randomN_]},
         })
        ])
        .then(axios.spread((data1, data2) => {
@@ -128,7 +139,7 @@ const Dashboard = () => {
     }
     return classes;
   };
-
+  console.log(category);
   return isLoading ? (
     <div className="loader"></div>
   ) : (
@@ -220,7 +231,7 @@ const Dashboard = () => {
         <h1>Suggested for you</h1>
       </div>
       <div className="d-header">
-        <h1>Explore {favorites[0]} Events</h1>
+        <h1>Explore {category[0]} Events</h1>
       </div>
       <div className="feed">
         {Object.values(userRecommendedEvents).map(function (e, i) {
@@ -248,7 +259,7 @@ const Dashboard = () => {
         })}
       </div>
       <div className="d-header">
-        <h1>Explore {favorites[1]} Events</h1>
+        <h1>Explore {category[1]} Events</h1>
       </div>
       <div className="feed">
         {Object.values(secondRecommendedEvents).map(function (e, i) {
