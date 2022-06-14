@@ -149,8 +149,10 @@ a {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  max-width: 800px;
-  animation: fadeIn 1s;
+}
+
+.header > * {
+  max-width: 1000px;
 }
 
 .showcase h1{
@@ -169,11 +171,15 @@ a {
   letter-spacing: 2px;
   text-align: center;
   margin: 20px;
+  animation: fadeIn 1s;
 }
 
 .showcase p {
   color: rgba(255, 255, 255, 0.85);
   font-weight: lighter;
+  animation: fadeIn 1s;
+  font-size: 20px;
+  text-align: center;
 }
 
 .signup_btn {
@@ -186,6 +192,7 @@ a {
   flex-direction: row;
   justify-content: center;
   transition: 0.5s;
+  animation: fadeIn 1s;
 }
 
 .signup_btn:hover {
@@ -203,6 +210,7 @@ a {
   align-items: center;
   justify-content: center;
   margin: 5px;
+  animation: fadeIn 1s;
 }
 
 .back_btn {
@@ -211,6 +219,7 @@ a {
   color: white; 
   padding: 10px 50px;
   margin: 5px;
+  animation: fadeIn 1s;
 }
 
 .forms {

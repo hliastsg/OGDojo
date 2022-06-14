@@ -121,7 +121,6 @@
 .prefered-tags-config input {
   display: flex;
   border: #918888e3 1px solid;
-  min-width: 400px;
   padding: 15px;
   margin: 0;
   font-size: 18px;
@@ -139,3 +138,17 @@
 .prefered-tags-config button {
   animation: fadeIn 0.5s;
 }
+@media screen and (max-width: 850px) {
+  .prefered-tags-config input {
+    max-width: 300px !important;
+  }
+  .prefered-tags-config {
+    max-width: 400px;
+  }
+  .tags-input-container {
+    justify-content: center;
+  }
+  .tags-input input {
+    max-width: 300px !important;
+  }
+ }

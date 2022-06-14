@@ -61,7 +61,7 @@ const PreferencesConfig = () => {
     <div>
       <Account/>
       <div className="config">
-        <h1>Preferences Configuration</h1>
+        <h1 style={{textAlign: "center"}}>Preferences Configuration</h1>
         <p>In this section, you can edit prefered event categories and interests.
         </p>
         <div className="prefered-tags-config">

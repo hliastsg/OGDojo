@@ -441,6 +441,16 @@
     top: 350px;
     left:220px;
   }
+
+  .d-header {
+    left: 50px;
+  }
+  .feed {
+    left: 80px;
+  }
+  .discard {
+    right: 290px !important;
+  }
 }
 
 

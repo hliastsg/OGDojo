@@ -208,3 +208,22 @@
   animation: 1s fadeIn;
 }
 
+@media screen and (max-width: 850px) {
+  .search-friends {
+    left: 50px;
+    max-width: 400px;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .search-friends input{
+    margin-top: 10;
+    margin-left: 0;
+  }
+  .event-overview td {
+    font-size: 25px;
+    letter-spacing: 0;
+    padding-left: 10px !important;
+  }
+
+}
+
