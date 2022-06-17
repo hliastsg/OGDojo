@@ -1,7 +1,7 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 
 const SavedEvents = () => {
 
@@ -114,44 +114,13 @@ const SavedEvents = () => {
         );
       })}
       </div>
+      <div className="d-header" style={{height: "140px"}}>
+        <Link to='/explore'>
+          <h1 className="explore-more-btn">Click here to explore more events</h1>
+        </Link>
+      </div>
       </div>
     )
   }
-
-  // return isLoading ? (
-  //   <div className="loader"></div>
-  // ) : (
-  //   <div>
-  //     <div className="d-header">
-  //         <h1>Events that you are attending</h1>
-  //          <div className="feed" style={{right: "300px"}}>
-  //         {Object.values(events).map(function (event, i) {
-  //           return (
-  //             <div
-  //               className="card"
-  //               key={i}
-  //               onClick={(e) => {
-  //                 setId(event._id);
-  //                 handlerProceed(event._id);
-  //               }}
-  //             >
-  //               <img
-  //                 src={`data:image/jpeg;charset=utf-8;base64,${arrayBufferToBase64(event.image.data.data)}`}
-  //                 style={{ width: "100%" }}
-  //               />
-  //               <div className="container">
-  //                 <h2 key={event._id}>{event.name} </h2>
-  //                 <p key={event._id + 1}>
-  //                 {new Date(event.startDate).toDateString()}
-  //                 </p>
-  //                 <p key={event._id + 99}>{event.startTime}</p>
-  //               </div>
-  //             </div>
-  //           );
-  //         })}
-  //       </div>  
-  //     </div>
-  //   </div>
-  // )
 }
 export default SavedEvents;

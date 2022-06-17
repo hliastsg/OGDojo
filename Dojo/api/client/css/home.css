@@ -17,7 +17,7 @@
 
 .home {
   font-family: Helvetica;
-  -webkit-backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(10px);
   text-decoration : #505050;
   background-color: #e2d9e986;
