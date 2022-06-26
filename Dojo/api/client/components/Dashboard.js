@@ -3,6 +3,7 @@ import { Link, useNavigate, Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { LoginError } from "../store/actions/authAction";
+import { getDate } from '../store/actions/getDateAction.js'
 import Cookies from "universal-cookie";
 import arrayBufferToBase64 from "base64-arraybuffer";
 
@@ -10,8 +11,12 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  dispatch(getDate());
+
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  const date = useSelector(state => state.date.today);
   const author = localStorage.getItem("email");
+
   const [userEvents, setUserEvents] = useState([]);
   const [userRecommendedEvents, setUserRecommendedEvents] = useState([]);
   const [secondRecommendedEvents, setSecondRecommendedEvents] = useState([]);
@@ -25,6 +30,7 @@ const Dashboard = () => {
   const [noResult, setNoResult] = useState();
   const [isClicked, setIsClicked] = useState(false);
   const [category, setCategory] = useState([]);
+
 
   const arrayBufferToBase64 = (buffer) => {
     let binaryStr = "";
@@ -139,7 +145,7 @@ const Dashboard = () => {
     }
     return classes;
   };
-  console.log(category);
+
   return isLoading ? (
     <div className="loader"></div>
   ) : (

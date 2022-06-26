@@ -73,6 +73,14 @@ const Attending = () => {
     })
   }
 
+  const ownerOnClick = (e) => {
+    navigate(`/friends-events/${friendId}`, {
+    state: { email: friendEmail, name: owner }
+  });
+
+}
+
+
   return isLoading ? (
     <div className="loader"></div>
   ) : (
@@ -84,6 +92,13 @@ const Attending = () => {
       <div className="event-overview">
         <h1>Event Details</h1>
         <table>
+          <tbody>
+            <tr>
+              <td style={{fontWeight: "400"}}>Owner:</td>
+              <td style={{fontWeight: "300",paddingLeft: "30px",cursor:"pointer"}}
+              onClick={ownerOnClick}>{owner}</td>
+            </tr>
+          </tbody>
           <tbody>
             <tr>
               <td style={{fontWeight: "400"}}>Event Name:</td>

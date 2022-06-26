@@ -179,6 +179,8 @@ const NewEvent = () => {
           type="file" 
           id="photo"
           name="photo"
+          style={{maxWidth: "400px"}}
+          className={!image && isSubmit ? "event-form error" : ""}
           onChange={uploadImage}
           required/> 
           <div>

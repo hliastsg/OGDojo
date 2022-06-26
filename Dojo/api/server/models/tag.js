@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema
 
-//Create user schema
+//Create tags schema
 const tag = new Schema ({
-  name: {
-    type: String,
+  tag: {
+    type: Array,
 
   }
 })

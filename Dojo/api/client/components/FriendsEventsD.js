@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import { useParams, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import {useSelector} from 'react-redux'
 import { growl } from "@crystallize/react-growl";
 import arrayBufferToBase64 from "base64-arraybuffer";
 
 const FriendsEventDetails = () => {
 
   const {id} = useParams();
+  const date = useSelector(state => state.date.today);
   const [event, setEvent] = useState({});
   const [owner, setOwner] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -97,6 +99,15 @@ const FriendsEventDetails = () => {
     });
   
   }
+  if (!isLoading) {
+    if (date > event.startDate.split('T')[0]) {
+      growl({
+        title: 'Dojo',
+        message: 'It looks like this is a past event',
+        type: 'warning'
+    })
+  }
+}
   return isLoading ? (
     <div className="loader"></div>
   ) : (

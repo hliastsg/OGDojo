@@ -14,9 +14,13 @@ const Auth = ({children}) => {
   if (auth && cookie) {
     return children;
   }
-  else {
+  else if (!cookie) {
+    dispatch(LoginError());
+    return <Navigate to='/'/>;
+  } else {
     dispatch(LoginError());
     return  <Navigate to ='/401'/>;
   }
+
 } 
 export default Auth;

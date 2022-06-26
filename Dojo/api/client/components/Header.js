@@ -1,14 +1,21 @@
 import React from "react";
 import { Link, Navigate} from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
+import { getDate }from '../store/actions/getDateAction.js'
 
 const Header = () => {
+ 
+  const dispatch = useDispatch();
+  dispatch(getDate());
 
   const isAuth = useSelector(state => state.auth.isAuthenticated);
+  const date = useSelector(state => state.date.today);
+  
   const cookie = new Cookies();
   const isLogged = cookie.get("access_token");
   
+  console.log(date);
   return !isAuth ? (
     <div className="showcase welcome">
       <nav className="header">
