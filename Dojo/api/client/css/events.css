@@ -26,6 +26,7 @@
 
 .d-header h1 {
   font-weight: 200 !important;
+  animation: fadeIn 2s;
 }
 
 .expl-header {

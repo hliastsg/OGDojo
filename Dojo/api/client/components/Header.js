@@ -11,11 +11,10 @@ const Header = () => {
 
   const isAuth = useSelector(state => state.auth.isAuthenticated);
   const date = useSelector(state => state.date.today);
-  
+
   const cookie = new Cookies();
   const isLogged = cookie.get("access_token");
   
-  console.log(date);
   return !isAuth ? (
     <div className="showcase welcome">
       <nav className="header">

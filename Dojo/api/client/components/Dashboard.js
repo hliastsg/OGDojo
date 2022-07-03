@@ -11,7 +11,6 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  dispatch(getDate());
 
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const date = useSelector(state => state.date.today);
@@ -55,6 +54,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchUserEvents();
+    dispatch(getDate());
   }, []);
 
   useEffect(() => {
