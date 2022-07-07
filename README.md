@@ -6,8 +6,7 @@ In order to execute this application, how have to set up a local MongoDB Databas
 
 ~Go to -> server/api/event and update path to you local uploads path:
 `path.join(
-            "/*your local path*/OGDojo/Dojo/api/uploads/" +
-              req.file.filename
+            "/*your local path*/OGDojo/Dojo/api/uploads/"
           )
 `
 
