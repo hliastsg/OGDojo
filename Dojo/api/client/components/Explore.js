@@ -11,11 +11,11 @@ const Explore = () => {
     "Music",
     "Concert",
     "Theatre",
+    "Cinema",
     "Party",
     "Arts",
     "Performance",
     "Photography",
-    "Conference",
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const [categoryClicked, setCategoryClicked] = useState(false);

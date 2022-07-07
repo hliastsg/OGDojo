@@ -13,11 +13,11 @@ const PreferedTags = ({formValues}) => {
     "Music",
     "Concert",
     "Theatre",
+    "Cinema",
     "Party",
     "Arts",
     "Performance",
     "Photography",
-    "Conference",
   ])
   const dispatch = useDispatch();
   const navigate = useNavigate();
