@@ -1,4 +1,4 @@
-# api
+# Dojo API
 
 In order to execute this application, how have to set up a local MongoDB Database.
 
